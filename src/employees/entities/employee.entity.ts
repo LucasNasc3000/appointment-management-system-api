@@ -12,7 +12,7 @@ export class Employee {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 11, unique: true })
+  @Column({ type: 'varchar', length: 14, unique: true })
   @IsString()
   cpf: string;
 
@@ -23,6 +23,10 @@ export class Employee {
   @Column({ type: 'varchar', length: 125 })
   @IsString()
   name: string;
+
+  @Column({ type: 'varchar', length: 255 })
+  @IsString()
+  passwordHash: string;
 
   @Column({ type: 'varchar', length: 15 })
   @IsString()
