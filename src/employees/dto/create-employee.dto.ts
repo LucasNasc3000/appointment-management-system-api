@@ -1,7 +1,7 @@
 import {
   IsDate,
   IsEmail,
-  IsNotEmpty,
+  IsEmpty,
   IsString,
   IsStrongPassword,
   Length,
@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 
 export class CreateEmployeeDTO {
-  @IsNotEmpty({
+  @IsEmpty({
     message: 'campo "cpf" não preenchido',
   })
   @IsString()
@@ -18,7 +18,7 @@ export class CreateEmployeeDTO {
   })
   readonly cpf: string;
 
-  @IsNotEmpty({
+  @IsEmpty({
     message: 'campo "email" não preenchido',
   })
   @IsString()
@@ -28,7 +28,7 @@ export class CreateEmployeeDTO {
   })
   readonly email: string;
 
-  @IsNotEmpty({
+  @IsEmpty({
     message: 'campo "nome" não preenchido',
   })
   @IsString()
@@ -37,7 +37,7 @@ export class CreateEmployeeDTO {
   })
   readonly name: string;
 
-  @IsNotEmpty()
+  @IsEmpty()
   @IsString()
   @IsStrongPassword({
     minLength: 12,
@@ -48,7 +48,7 @@ export class CreateEmployeeDTO {
   })
   readonly password_hash: string;
 
-  @IsNotEmpty({
+  @IsEmpty({
     message: 'campo "função" não preenchido',
   })
   @IsString()
@@ -57,7 +57,7 @@ export class CreateEmployeeDTO {
   })
   readonly role: string;
 
-  @IsNotEmpty({
+  @IsEmpty({
     message: 'campo "início da jornada de trabalho" não preenchido',
   })
   @IsDate({
@@ -66,7 +66,7 @@ export class CreateEmployeeDTO {
   })
   readonly workday_begin: string;
 
-  @IsNotEmpty({
+  @IsEmpty({
     message: 'campo "término da jornada de trabalho" não preenchido',
   })
   @IsDate({
@@ -75,7 +75,7 @@ export class CreateEmployeeDTO {
   })
   readonly workday_end: string;
 
-  @IsNotEmpty({
+  @IsEmpty({
     message: 'campo "telefone" não preenchido',
   })
   @IsString()
@@ -84,7 +84,7 @@ export class CreateEmployeeDTO {
   })
   readonly phone_number: string;
 
-  @IsNotEmpty({
+  @IsEmpty({
     message: 'campo "endereço" não preenchido',
   })
   @IsString()
