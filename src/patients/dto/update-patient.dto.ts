@@ -1,8 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { IsNotEmpty } from 'class-validator';
-import { CreateEmployeeDTO } from './create-employee.dto';
+import { CreatePatientDTO } from './create-patient.dto';
 
-export class UpdateEmployeeDTO extends PartialType(CreateEmployeeDTO) {
+export class UpdatePatientDTO extends PartialType(CreatePatientDTO) {
   @IsNotEmpty({
     message: 'O campo "cpf" não deve ser atualizado',
   })
