@@ -8,7 +8,7 @@ import {
   Max,
 } from 'class-validator';
 
-export class CreateEmployeeDTO {
+export class CreateDoctorDTO {
   @IsEmpty({
     message: 'campo "cpf" não preenchido',
   })
@@ -49,13 +49,31 @@ export class CreateEmployeeDTO {
   readonly password_hash: string;
 
   @IsEmpty({
-    message: 'campo "função" não preenchido',
+    message: 'campo "especialidade" não preenchido',
   })
   @IsString()
-  @Length(5, 15, {
-    message: 'campo "função" deve ter no mínimo 5 e no máximo 15 caracteres',
+  @Max(100, {
+    message: 'campo "especialidade" deve ter no máximo 100 caracteres',
   })
-  readonly role: string;
+  readonly specialty: string;
+
+  @IsEmpty({
+    message: 'campo "crm" não preenchido',
+  })
+  @IsString()
+  @Length(13, 13, {
+    message: 'campo "crm" deve estar no formato CRM/SP 111000',
+  })
+  readonly crm: string;
+
+  @IsEmpty({
+    message: 'campo "grau de formação" não preenchido',
+  })
+  @IsString()
+  @Max(25, {
+    message: 'campo "grau de formação" deve ter no máximo 25 caracteres',
+  })
+  readonly academic_degree: string;
 
   @IsEmpty({
     message: 'campo "início da jornada de trabalho" não preenchido',

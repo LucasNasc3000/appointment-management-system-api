@@ -6,5 +6,5 @@ export class UpdatePatientDTO extends PartialType(CreatePatientDTO) {
   @IsNotEmpty({
     message: 'O campo "cpf" não deve ser atualizado',
   })
-  readonly cpf?: string;
+  readonly cpf: string;
 }

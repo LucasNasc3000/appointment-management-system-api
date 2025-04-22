@@ -6,5 +6,5 @@ export class UpdateEmployeeDTO extends PartialType(CreateEmployeeDTO) {
   @IsNotEmpty({
     message: 'O campo "cpf" não deve ser atualizado',
   })
-  readonly cpf?: string;
+  readonly cpf: string;
 }

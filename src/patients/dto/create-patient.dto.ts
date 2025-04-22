@@ -25,7 +25,7 @@ export class CreatePatientDTO {
   })
   @IsString()
   @Max(125, {
-    message: 'campo "nome" deve ter no mínimo 3 e no máximo 125 caracteres',
+    message: 'campo "nome" deve ter no máximo 125 caracteres',
   })
   readonly name: string;
 
