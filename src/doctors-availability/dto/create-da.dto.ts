@@ -22,7 +22,9 @@ export class CreateDoctorsAvailabilityDTO {
   @IsEmpty({
     message: 'campo "situação" não preenchido',
   })
-  @IsString()
+  @IsString({
+    message: 'campo "situação" deve estar em formato de texto',
+  })
   @Length(8, 9, {
     message: 'campo "situação" deve ser "empregado" ou "demitido',
   })
