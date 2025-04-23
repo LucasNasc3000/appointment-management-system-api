@@ -1,5 +1,4 @@
 import {
-  IsDate,
   IsEmail,
   IsEmpty,
   IsString,
@@ -60,18 +59,10 @@ export class CreateEmployeeDTO {
   @IsEmpty({
     message: 'campo "início da jornada de trabalho" não preenchido',
   })
-  @IsDate({
-    message:
-      'O campo "início da jornada de trabalho" deve estar em formato de data',
-  })
   readonly workday_begin: string;
 
   @IsEmpty({
     message: 'campo "término da jornada de trabalho" não preenchido',
-  })
-  @IsDate({
-    message:
-      'O campo "término da jornada de trabalho" deve estar em formato de data',
   })
   readonly workday_end: string;
 

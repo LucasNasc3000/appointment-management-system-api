@@ -40,11 +40,11 @@ export class Doctor {
   @IsString()
   academic_degree: string;
 
-  @Column()
-  workday_begin: Date;
+  @Column({ type: 'time' })
+  workday_begin: string;
 
-  @Column()
-  workday_end: Date;
+  @Column({ type: 'time' })
+  workday_end: string;
 
   @Column({ type: 'varchar', length: 15 })
   @IsString()

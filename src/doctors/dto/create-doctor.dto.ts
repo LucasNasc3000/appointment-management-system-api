@@ -1,5 +1,4 @@
 import {
-  IsDate,
   IsEmail,
   IsEmpty,
   IsString,
@@ -24,7 +23,7 @@ export class CreateDoctorDTO {
   @IsString()
   @IsEmail()
   @Length(13, 50, {
-    message: 'O campo "email" deve ter no mínimo 13 e no máximo 50 caracteres',
+    message: 'campo "email" deve ter no mínimo 13 e no máximo 50 caracteres',
   })
   readonly email: string;
 
@@ -78,18 +77,10 @@ export class CreateDoctorDTO {
   @IsEmpty({
     message: 'campo "início da jornada de trabalho" não preenchido',
   })
-  @IsDate({
-    message:
-      'O campo "início da jornada de trabalho" deve estar em formato de data',
-  })
   readonly workday_begin: string;
 
   @IsEmpty({
     message: 'campo "término da jornada de trabalho" não preenchido',
-  })
-  @IsDate({
-    message:
-      'O campo "término da jornada de trabalho" deve estar em formato de data',
   })
   readonly workday_end: string;
 
