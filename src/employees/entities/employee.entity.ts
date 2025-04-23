@@ -32,6 +32,9 @@ export class Employee {
   @IsString()
   role: string;
 
+  @Column({ type: 'varchar', length: 9 })
+  situation: string;
+
   @Column({ type: 'time' })
   workday_begin: string;
 

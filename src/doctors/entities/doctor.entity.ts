@@ -40,6 +40,9 @@ export class Doctor {
   @IsString()
   academic_degree: string;
 
+  @Column({ type: 'varchar', length: 9 })
+  situation: string;
+
   @Column({ type: 'time' })
   workday_begin: string;
 

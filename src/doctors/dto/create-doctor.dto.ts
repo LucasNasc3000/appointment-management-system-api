@@ -75,6 +75,15 @@ export class CreateDoctorDTO {
   readonly academic_degree: string;
 
   @IsEmpty({
+    message: 'campo "situação" não preenchido',
+  })
+  @IsString()
+  @Max(9, {
+    message: 'campo "situação" deve ser "empregado" ou "demitido',
+  })
+  readonly situation: string;
+
+  @IsEmpty({
     message: 'campo "início da jornada de trabalho" não preenchido',
   })
   readonly workday_begin: string;
