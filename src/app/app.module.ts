@@ -1,7 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppointmentsModule } from 'src/appointments/appointments.module';
+import { DoctorsAvailabilityModule } from 'src/doctors-availability/doctors-availability.module';
+import { DoctorsModule } from 'src/doctors/doctors.module';
 import { EmployeesModule } from 'src/employees/employees.module';
+import { PatientsModule } from 'src/patients/patients.module';
 import appConfig from './app.config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -27,6 +31,10 @@ import { AppService } from './app.service';
       },
     }),
     EmployeesModule,
+    PatientsModule,
+    DoctorsAvailabilityModule,
+    DoctorsModule,
+    AppointmentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
