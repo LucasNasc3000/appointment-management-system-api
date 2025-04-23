@@ -21,7 +21,7 @@ export class Appointment {
   @Column({ type: 'time' })
   hour: string;
 
-  @Column({ type: 'varchar', length: 15 })
+  @Column({ type: 'varchar', length: 10 })
   format: string;
 
   @ManyToOne(() => Doctor, { onDelete: 'RESTRICT' })

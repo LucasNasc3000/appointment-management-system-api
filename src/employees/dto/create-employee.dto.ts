@@ -51,8 +51,8 @@ export class CreateEmployeeDTO {
     message: 'campo "função" não preenchido',
   })
   @IsString()
-  @Length(5, 15, {
-    message: 'campo "função" deve ter no mínimo 5 e no máximo 15 caracteres',
+  @Max(15, {
+    message: 'campo "função" deve ter no máximo 15 caracteres',
   })
   readonly role: string;
 
@@ -60,7 +60,7 @@ export class CreateEmployeeDTO {
     message: 'campo "situação" não preenchido',
   })
   @IsString()
-  @Max(9, {
+  @Length(8, 9, {
     message: 'campo "situação" deve ser "empregado" ou "demitido',
   })
   readonly situation: string;

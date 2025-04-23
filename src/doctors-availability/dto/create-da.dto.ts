@@ -1,4 +1,4 @@
-import { IsDate, IsEmpty, IsString, IsUUID, Max } from 'class-validator';
+import { IsDate, IsEmpty, IsString, IsUUID, Length } from 'class-validator';
 
 export class CreateDoctorsAvailabilityDTO {
   @IsEmpty({
@@ -23,7 +23,7 @@ export class CreateDoctorsAvailabilityDTO {
     message: 'campo "situação" não preenchido',
   })
   @IsString()
-  @Max(9, {
+  @Length(8, 9, {
     message: 'campo "situação" deve ser "empregado" ou "demitido',
   })
   readonly situation: string;

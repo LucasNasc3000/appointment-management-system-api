@@ -43,7 +43,7 @@ export class CreatePatientDTO {
   })
   @IsString()
   @Length(15, 15, {
-    message: 'campo "telefone" deve ter estar no format (00) 00000 0000 ',
+    message: 'campo "telefone" deve ter estar no formato (00) 00000 0000 ',
   })
   readonly phone_number: string;
 }
