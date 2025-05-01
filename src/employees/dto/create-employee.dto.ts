@@ -1,14 +1,13 @@
 import {
   IsEmail,
-  IsEmpty,
+  IsNotEmpty,
   IsString,
   IsStrongPassword,
   Length,
-  Max,
 } from 'class-validator';
 
 export class CreateEmployeeDTO {
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "cpf" não preenchido',
   })
   @IsString({
@@ -19,7 +18,7 @@ export class CreateEmployeeDTO {
   })
   readonly cpf: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "email" não preenchido',
   })
   @IsString({
@@ -31,18 +30,18 @@ export class CreateEmployeeDTO {
   })
   readonly email: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "nome" não preenchido',
   })
   @IsString({
     message: 'campo "nome" deve estar em formato de texto',
   })
-  @Max(125, {
+  @Length(0, 125, {
     message: 'campo "nome" deve ter no máximo 125 caracteres',
   })
   readonly name: string;
 
-  @IsEmpty()
+  @IsNotEmpty()
   @IsString()
   @IsStrongPassword({
     minLength: 12,
@@ -53,18 +52,18 @@ export class CreateEmployeeDTO {
   })
   readonly password_hash: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "função" não preenchido',
   })
   @IsString({
     message: 'campo "função" deve estar em formato de texto',
   })
-  @Max(15, {
-    message: 'campo "função" deve ter no máximo 15 caracteres',
+  @Length(5, 15, {
+    message: 'campo "função" deve ter entre 5 e 15 caracteres',
   })
   readonly role: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "situação" não preenchido',
   })
   @IsString({
@@ -75,17 +74,17 @@ export class CreateEmployeeDTO {
   })
   readonly situation: string;
 
-  // @IsEmpty({
-  //   message: 'campo "início da jornada de trabalho" não preenchido',
-  // })
-  // readonly workday_begin: string;
+  @IsNotEmpty({
+    message: 'campo "início da jornada de trabalho" não preenchido',
+  })
+  readonly workday_begin: string;
 
-  // @IsEmpty({
-  //   message: 'campo "término da jornada de trabalho" não preenchido',
-  // })
-  // readonly workday_end: string;
+  @IsNotEmpty({
+    message: 'campo "término da jornada de trabalho" não preenchido',
+  })
+  readonly workday_end: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "telefone" não preenchido',
   })
   @IsString({
@@ -96,13 +95,13 @@ export class CreateEmployeeDTO {
   })
   readonly phone_number: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "endereço" não preenchido',
   })
   @IsString({
     message: 'campo "endereço" deve estar em formato de texto',
   })
-  @Max(100, {
+  @Length(0, 100, {
     message: 'O campo "endereço não deve passar dos 100 caracteres',
   })
   readonly address: string;
