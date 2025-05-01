@@ -77,10 +77,18 @@ export class CreateEmployeeDTO {
   @IsNotEmpty({
     message: 'campo "início da jornada de trabalho" não preenchido',
   })
+  @IsString({
+    message:
+      'campo "início da jornada de trabalho" deve estar em formato de texto',
+  })
   readonly workday_begin: string;
 
   @IsNotEmpty({
     message: 'campo "término da jornada de trabalho" não preenchido',
+  })
+  @IsString({
+    message:
+      'campo "término da jornada de trabalho" deve estar em formato de texto',
   })
   readonly workday_end: string;
 

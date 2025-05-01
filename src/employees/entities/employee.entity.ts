@@ -26,7 +26,7 @@ export class Employee {
 
   @Column({ type: 'varchar', length: 255 })
   @IsString()
-  passwordHash: string;
+  password_hash: string;
 
   @Column({ type: 'varchar', length: 15 })
   @IsString()
@@ -35,10 +35,10 @@ export class Employee {
   @Column({ type: 'varchar', length: 9 })
   situation: string;
 
-  @Column({ type: 'time' })
+  @Column({ type: 'varchar', length: 8 })
   workday_begin: string;
 
-  @Column({ type: 'time' })
+  @Column({ type: 'varchar', length: 8 })
   workday_end: string;
 
   @Column({ type: 'varchar', length: 15 })

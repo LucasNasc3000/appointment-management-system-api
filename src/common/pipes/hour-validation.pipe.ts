@@ -10,7 +10,7 @@ export class ParseToHourPipe implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {
     const { workday_begin } = value;
     const { workday_end } = value;
-    const time = new Date();
+
     const hourRegex = /(0?[0-9]|1[0-9]|2[0-3]):[0-9]+:(0?[0-9]|[1-5][0-9])/;
 
     if (metadata.type !== 'body') {
@@ -23,12 +23,6 @@ export class ParseToHourPipe implements PipeTransform {
       );
     }
 
-    const hoursWkBegin = time.setTime(workday_begin);
-    const hoursWkEnd = time.setTime(workday_end);
-
-    return {
-      begin: hoursWkBegin,
-      end: hoursWkEnd,
-    };
+    return value;
   }
 }
