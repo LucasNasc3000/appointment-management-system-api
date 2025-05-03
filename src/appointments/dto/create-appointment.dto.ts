@@ -1,7 +1,7 @@
-import { IsDate, IsEmpty, IsString, IsUUID, Length } from 'class-validator';
+import { IsDate, IsNotEmpty, IsString, IsUUID, Length } from 'class-validator';
 
 export class CreateAppointmentDTO {
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "data" não preenchido',
   })
   @IsDate({
@@ -9,12 +9,12 @@ export class CreateAppointmentDTO {
   })
   readonly date: Date;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "hora início" não preenchido',
   })
   readonly hour: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "hora início" não preenchido',
   })
   @IsString({
@@ -26,7 +26,7 @@ export class CreateAppointmentDTO {
   readonly format: string;
   // formato de text, msg isString
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "doctor_id" não preenchido',
   })
   @IsUUID(4, {
@@ -34,7 +34,7 @@ export class CreateAppointmentDTO {
   })
   readonly doctor_id: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "patient_id" não preenchido',
   })
   @IsUUID(4, {
@@ -42,7 +42,7 @@ export class CreateAppointmentDTO {
   })
   readonly patient_id: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "status" não preenchido',
   })
   @IsString({

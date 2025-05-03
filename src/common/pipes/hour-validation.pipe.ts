@@ -18,9 +18,7 @@ export class ParseToHourPipe implements PipeTransform {
     }
 
     if (!hourRegex.test(workday_begin) || !hourRegex.test(workday_end)) {
-      throw new BadRequestException(
-        'As horas precisam estar no formato HH:MM:SS',
-      );
+      throw new BadRequestException('horas precisam estar no formato HH:MM:SS');
     }
 
     return value;

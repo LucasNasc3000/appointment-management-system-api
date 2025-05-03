@@ -1,14 +1,14 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { IsNotEmpty } from 'class-validator';
+import { IsEmpty } from 'class-validator';
 import { CreateDoctorDTO } from './create-doctor.dto';
 
 export class UpdateDoctorDTO extends PartialType(CreateDoctorDTO) {
-  @IsNotEmpty({
+  @IsEmpty({
     message: 'O campo "cpf" não deve ser atualizado',
   })
   readonly cpf: string;
 
-  @IsNotEmpty({
+  @IsEmpty({
     message: 'O campo "crm" não deve ser atualizado',
   })
   readonly crm: string;

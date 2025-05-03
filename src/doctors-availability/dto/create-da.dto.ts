@@ -1,7 +1,7 @@
-import { IsDate, IsEmpty, IsString, IsUUID, Length } from 'class-validator';
+import { IsDate, IsNotEmpty, IsString, IsUUID, Length } from 'class-validator';
 
 export class CreateDoctorsAvailabilityDTO {
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "data" não preenchido',
   })
   @IsDate({
@@ -9,17 +9,17 @@ export class CreateDoctorsAvailabilityDTO {
   })
   readonly date: Date;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "hora início" não preenchido',
   })
   readonly hour_from: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "hora término" não preenchido',
   })
   readonly hour_to: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "situação" não preenchido',
   })
   @IsString({
@@ -30,7 +30,7 @@ export class CreateDoctorsAvailabilityDTO {
   })
   readonly situation: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "doctor_id" não preenchido',
   })
   @IsUUID(4, {

@@ -1,7 +1,7 @@
-import { IsEmail, IsEmpty, IsString, Length, Max } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 
 export class CreatePatientDTO {
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "cpf" não preenchido',
   })
   @IsString({
@@ -12,7 +12,7 @@ export class CreatePatientDTO {
   })
   readonly cpf: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "email" não preenchido',
   })
   @IsString({
@@ -24,29 +24,29 @@ export class CreatePatientDTO {
   })
   readonly email: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "nome" não preenchido',
   })
   @IsString({
     message: 'campo "nome" deve estar em formato de texto',
   })
-  @Max(125, {
+  @Length(0, 125, {
     message: 'campo "nome" deve ter no máximo 125 caracteres',
   })
   readonly name: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "endereço" não preenchido',
   })
   @IsString({
     message: 'campo "endereço" deve estar em formato de texto',
   })
-  @Max(100, {
+  @Length(0, 100, {
     message: 'O campo "endereço não deve passar dos 100 caracteres',
   })
   readonly address: string;
 
-  @IsEmpty({
+  @IsNotEmpty({
     message: 'campo "telefone" não preenchido',
   })
   @IsString({
