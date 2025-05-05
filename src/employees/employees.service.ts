@@ -114,6 +114,7 @@ export class EmployeesService {
     return employeeFindById;
   }
 
+  // Validar os dados dos parametros (e de onde mais eles vierem. Para todas as buscas)
   async FindByCpf(cpf: string) {
     const employeeFindByCpf = await this.employeeRepository.findOneBy({
       cpf,
@@ -247,7 +248,7 @@ export class EmployeesService {
         id: 'desc',
       },
       where: {
-        workday_begin: workdayBegin,
+        workday_begin: Like(`${workdayBegin}%`),
       },
     });
 
@@ -274,7 +275,7 @@ export class EmployeesService {
         id: 'desc',
       },
       where: {
-        workday_end: workdayEnd,
+        workday_end: Like(`${workdayEnd}%`),
       },
     });
 
