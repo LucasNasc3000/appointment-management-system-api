@@ -9,12 +9,15 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { ParseToHourPipe } from 'src/common/pipes/hour-validation.pipe';
+import { FindByEmailValidation } from 'src/common/pipes/searchDataValidationEmployees/email-validation.pipe';
+import { FindByIdValidation } from 'src/common/pipes/searchDataValidationEmployees/id-validation.pipe';
 import { CreateEmployeeDTO } from './dto/create-employee.dto';
 import { PaginationDTO } from './dto/pagination.dto';
 import { UpdateEmployeeAdminDTO } from './dto/update-employee-admin.dto';
 import { UpdateEmployeeDTO } from './dto/update-employee.dto';
 import { EmployeesService } from './employees.service';
 
+// Criar validações para updates e creates não aceitarem urls com valores
 @Controller('employees')
 export class EmployeesController {
   constructor(private readonly employeeService: EmployeesService) {}
@@ -42,11 +45,13 @@ export class EmployeesController {
   }
 
   @Get('/search/id/:id')
+  @UsePipes(FindByIdValidation)
   FindById(@Param('id') id: string) {
     return this.employeeService.FindById(id);
   }
 
   @Get('/search/email/:email')
+  @UsePipes(FindByEmailValidation)
   FindByEmail(@Param('email') email: string) {
     return this.employeeService.FindByEmail(email);
   }
