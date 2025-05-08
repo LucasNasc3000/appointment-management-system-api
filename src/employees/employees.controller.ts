@@ -8,7 +8,9 @@ import {
   Query,
   UsePipes,
 } from '@nestjs/common';
+import { AntiStatementUrl } from 'src/common/pipes/anti-statements-url.pipe';
 import { ParseToHourPipe } from 'src/common/pipes/hour-validation.pipe';
+import { FindByCpfValidation } from 'src/common/pipes/searchDataValidationEmployees/cpf-validation.pipe';
 import { FindByEmailValidation } from 'src/common/pipes/searchDataValidationEmployees/email-validation.pipe';
 import { FindByIdValidation } from 'src/common/pipes/searchDataValidationEmployees/id-validation.pipe';
 import { CreateEmployeeDTO } from './dto/create-employee.dto';
@@ -29,6 +31,7 @@ export class EmployeesController {
   }
 
   @Patch('/update/self/:id')
+  @UsePipes(AntiStatementUrl)
   UpdateSelf(
     @Param('id') id: string,
     @Body() updateEmployeeDTO: UpdateEmployeeDTO,
@@ -37,6 +40,7 @@ export class EmployeesController {
   }
 
   @Patch('/update/admin/:id')
+  @UsePipes(AntiStatementUrl)
   UpdateAdmin(
     @Param('id') id: string,
     @Body() updateEmployeeAdminDTO: UpdateEmployeeAdminDTO,
@@ -45,18 +49,19 @@ export class EmployeesController {
   }
 
   @Get('/search/id/:id')
-  @UsePipes(FindByIdValidation)
+  @UsePipes(AntiStatementUrl, FindByIdValidation)
   FindById(@Param('id') id: string) {
     return this.employeeService.FindById(id);
   }
 
   @Get('/search/email/:email')
-  @UsePipes(FindByEmailValidation)
+  @UsePipes(AntiStatementUrl, FindByEmailValidation)
   FindByEmail(@Param('email') email: string) {
     return this.employeeService.FindByEmail(email);
   }
 
   @Get('/search/cpf/:cpf')
+  @UsePipes(AntiStatementUrl, FindByCpfValidation)
   FindByCpf(@Param('cpf') cpf: string) {
     return this.employeeService.FindByCpf(cpf);
   }
