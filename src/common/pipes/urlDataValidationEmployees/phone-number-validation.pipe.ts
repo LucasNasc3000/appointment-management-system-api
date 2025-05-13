@@ -6,18 +6,22 @@ import {
 } from '@nestjs/common';
 
 @Injectable()
-export class FindByEmailValidation implements PipeTransform {
+export class FindByPhoneNumberValidation implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {
-    const email = String(value);
+    const phoneNumber = String(value);
 
     if (metadata.type !== 'param') {
       throw new BadRequestException('metadata type must be "param"');
     }
 
+    if (phoneNumber.length < 15 || phoneNumber.length > 15) {
+      throw new BadRequestException('Formato inválido');
+    }
+
     if (
-      !email.includes('@mail.com') &&
-      !email.includes('@gmail.com') &&
-      !email.includes('@outlook.com')
+      !phoneNumber.includes('(') &&
+      !phoneNumber.includes(')') &&
+      !phoneNumber.includes(' ')
     ) {
       throw new BadRequestException('Formato inválido');
     }

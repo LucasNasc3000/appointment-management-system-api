@@ -10,11 +10,13 @@ import {
 } from '@nestjs/common';
 import { AntiStatementUrl } from 'src/common/pipes/anti-statements-url.pipe';
 import { ParseToHourPipe } from 'src/common/pipes/hour-validation.pipe';
-import { FindByCpfValidation } from 'src/common/pipes/searchDataValidationEmployees/cpf-validation.pipe';
-import { FindByEmailValidation } from 'src/common/pipes/searchDataValidationEmployees/email-validation.pipe';
-import { FindByIdValidation } from 'src/common/pipes/searchDataValidationEmployees/id-validation.pipe';
+import { FindByCpfValidation } from 'src/common/pipes/urlDataValidationEmployees/cpf-validation.pipe';
+import { FindByEmailValidation } from 'src/common/pipes/urlDataValidationEmployees/email-validation.pipe';
+import { FindByIdValidation } from 'src/common/pipes/urlDataValidationEmployees/id-validation.pipe';
+import { FindByNameValidation } from 'src/common/pipes/urlDataValidationEmployees/name-validation.pipe';
+import { FindByPhoneNumberValidation } from 'src/common/pipes/urlDataValidationEmployees/phone-number-validation.pipe';
 import { CreateEmployeeDTO } from './dto/create-employee.dto';
-import { PaginationDTO } from './dto/pagination.dto';
+import { PaginationDTO } from './dto/pagination-employee.dto';
 import { UpdateEmployeeAdminDTO } from './dto/update-employee-admin.dto';
 import { UpdateEmployeeDTO } from './dto/update-employee.dto';
 import { EmployeesService } from './employees.service';
@@ -67,6 +69,7 @@ export class EmployeesController {
   }
 
   @Get('/search/phoneNumber/:phoneNumber')
+  @UsePipes(AntiStatementUrl, FindByPhoneNumberValidation)
   FindByPhoneNumber(@Param('phoneNumber') phoneNumber: string) {
     return this.employeeService.FindByPhoneNumber(phoneNumber);
   }
@@ -76,43 +79,29 @@ export class EmployeesController {
     return this.employeeService.FindByAddress(address);
   }
 
-  @Get('/search/name/:name')
-  FindByName(
-    @Query() paginationDto: PaginationDTO,
-    @Param('name') name: string,
-  ) {
-    return this.employeeService.FindByName(paginationDto, name);
+  @Get('/search/name')
+  @UsePipes(AntiStatementUrl, FindByNameValidation)
+  FindByName(@Query() paginationDto: PaginationDTO) {
+    return this.employeeService.FindByName(paginationDto);
   }
 
   @Get('/search/role/:role')
-  FindByRole(
-    @Query() paginationDto: PaginationDTO,
-    @Param('role') role: string,
-  ) {
-    return this.employeeService.FindByRole(paginationDto, role);
+  FindByRole(@Query() paginationDto: PaginationDTO) {
+    return this.employeeService.FindByRole(paginationDto);
   }
 
   @Get('/search/situation/:situation')
-  FindBySituation(
-    @Query() paginationDto: PaginationDTO,
-    @Param('situation') situation: string,
-  ) {
-    return this.employeeService.FindBySituation(paginationDto, situation);
+  FindBySituation(@Query() paginationDto: PaginationDTO) {
+    return this.employeeService.FindBySituation(paginationDto);
   }
 
   @Get('/search/workdayBegin/:workdayBegin')
-  FindByWorkdayBegin(
-    @Query() paginationDto: PaginationDTO,
-    @Param('workdayBegin') workdayBegin: string,
-  ) {
-    return this.employeeService.FindByWorkdayBegin(paginationDto, workdayBegin);
+  FindByWorkdayBegin(@Query() paginationDto: PaginationDTO) {
+    return this.employeeService.FindByWorkdayBegin(paginationDto);
   }
 
   @Get('/search/workdayEnd/:workdayEnd')
-  FindByWorkdayEnd(
-    @Query() paginationDto: PaginationDTO,
-    @Param('workdayEnd') workdayEnd: string,
-  ) {
-    return this.employeeService.FindByWorkdayEnd(paginationDto, workdayEnd);
+  FindByWorkdayEnd(@Query() paginationDto: PaginationDTO) {
+    return this.employeeService.FindByWorkdayEnd(paginationDto);
   }
 }

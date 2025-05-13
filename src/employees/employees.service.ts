@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { CreateEmployeeDTO } from './dto/create-employee.dto';
-import { PaginationDTO } from './dto/pagination.dto';
+import { PaginationDTO } from './dto/pagination-employee.dto';
 import { UpdateEmployeeAdminDTO } from './dto/update-employee-admin.dto';
 import { UpdateEmployeeDTO } from './dto/update-employee.dto';
 import { Employee } from './entities/employee.entity';
@@ -139,22 +139,29 @@ export class EmployeesService {
     return employeeFindByEmail;
   }
 
-  async FindByName(paginationDTO: PaginationDTO, name: string) {
-    const { limit, offset } = paginationDTO;
+  async FindByName(paginationDTO: PaginationDTO) {
+    // O front-end deve somar 5 ao valor de offset a cada página
+    const { limit = 5, offset = 5, employeeSearchData } = paginationDTO;
+    console.log(employeeSearchData);
 
     const employeeFindByName = await this.employeeRepository.find({
-      take: limit,
-      skip: offset,
       order: {
         id: 'desc',
       },
       where: {
-        name: Like(`${name}%`),
+        name: Like(`${employeeSearchData}%`),
       },
     });
+    console.log(employeeFindByName);
 
     if (!employeeFindByName) {
-      throw new NotFoundException('Funcionário não encontrado');
+      throw new InternalServerErrorException(
+        'Erro desconhecido ao tentar pesquisar por funcionários',
+      );
+    }
+
+    if (employeeFindByName.length < 1) {
+      throw new NotFoundException('Funcionários não encontrados');
     }
 
     return employeeFindByName;
@@ -184,8 +191,8 @@ export class EmployeesService {
     return employeeFindByAddress;
   }
 
-  async FindByRole(paginationDTO: PaginationDTO, role: string) {
-    const { limit, offset } = paginationDTO;
+  async FindByRole(paginationDTO: PaginationDTO) {
+    const { limit = 5, offset = 5, employeeSearchData } = paginationDTO;
 
     const employeeFindByRole = await this.employeeRepository.find({
       take: limit,
@@ -194,7 +201,7 @@ export class EmployeesService {
         id: 'desc',
       },
       where: {
-        role,
+        role: employeeSearchData,
       },
     });
 
@@ -211,8 +218,8 @@ export class EmployeesService {
     return employeeFindByRole;
   }
 
-  async FindBySituation(paginationDTO: PaginationDTO, situation: string) {
-    const { limit, offset } = paginationDTO;
+  async FindBySituation(paginationDTO: PaginationDTO) {
+    const { limit = 5, offset = 5, employeeSearchData } = paginationDTO;
 
     const employeeFindBySituation = await this.employeeRepository.find({
       take: limit,
@@ -221,7 +228,7 @@ export class EmployeesService {
         id: 'desc',
       },
       where: {
-        situation,
+        situation: employeeSearchData,
       },
     });
 
@@ -238,8 +245,8 @@ export class EmployeesService {
     return employeeFindBySituation;
   }
 
-  async FindByWorkdayBegin(paginationDTO: PaginationDTO, workdayBegin: string) {
-    const { limit, offset } = paginationDTO;
+  async FindByWorkdayBegin(paginationDTO: PaginationDTO) {
+    const { limit = 5, offset = 5, employeeSearchData } = paginationDTO;
 
     const employeeFindByWorkdayBegin = await this.employeeRepository.find({
       take: limit,
@@ -248,7 +255,7 @@ export class EmployeesService {
         id: 'desc',
       },
       where: {
-        workday_begin: Like(`${workdayBegin}%`),
+        workday_begin: Like(`${employeeSearchData}%`),
       },
     });
 
@@ -265,8 +272,8 @@ export class EmployeesService {
     return employeeFindByWorkdayBegin;
   }
 
-  async FindByWorkdayEnd(paginationDTO: PaginationDTO, workdayEnd: string) {
-    const { limit, offset } = paginationDTO;
+  async FindByWorkdayEnd(paginationDTO: PaginationDTO) {
+    const { limit = 5, offset = 5, employeeSearchData } = paginationDTO;
 
     const employeeFindByWorkdayEnd = await this.employeeRepository.find({
       take: limit,
@@ -275,7 +282,7 @@ export class EmployeesService {
         id: 'desc',
       },
       where: {
-        workday_end: Like(`${workdayEnd}%`),
+        workday_end: Like(`${employeeSearchData}%`),
       },
     });
 

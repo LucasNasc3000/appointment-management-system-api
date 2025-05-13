@@ -99,7 +99,7 @@ export class CreateEmployeeDTO {
     message: 'campo "telefone" deve estar em formato de texto',
   })
   @Length(15, 15, {
-    message: 'campo "telefone" deve ter estar no format (00) 00000 0000',
+    message: 'campo "telefone" deve ter estar no formato (00) 00000 0000',
   })
   readonly phone_number: string;
 
