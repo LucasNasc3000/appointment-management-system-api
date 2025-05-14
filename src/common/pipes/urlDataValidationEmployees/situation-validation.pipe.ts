@@ -6,20 +6,20 @@ import {
 } from '@nestjs/common';
 
 @Injectable()
-export class FindByNameValidation implements PipeTransform {
+export class FindBySituationValidation implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {
-    const alphabetRegex = /^[a-zA-Z]+$/;
-    const name = String(value.value);
+    const situation = String(value.value);
 
     if (metadata.type !== 'query') {
       throw new BadRequestException('metadata type must be "query"');
     }
 
-    if (name.length > 125) {
-      throw new BadRequestException('Formato inválido');
-    }
-
-    if (!alphabetRegex.test(name)) {
+    if (
+      situation !== 'empregado' &&
+      situation !== 'demitido' &&
+      situation !== 'afastado' &&
+      situation !== 'sob aviso'
+    ) {
       throw new BadRequestException('Formato inválido');
     }
 

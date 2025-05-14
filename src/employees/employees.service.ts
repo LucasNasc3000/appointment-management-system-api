@@ -140,19 +140,18 @@ export class EmployeesService {
   }
 
   async FindByName(paginationDTO: PaginationDTO) {
-    // O front-end deve somar 5 ao valor de offset a cada página
-    const { limit = 5, offset = 5, employeeSearchData } = paginationDTO;
-    console.log(employeeSearchData);
+    const { limit, offset, value } = paginationDTO;
 
     const employeeFindByName = await this.employeeRepository.find({
+      take: limit,
+      skip: offset,
       order: {
         id: 'desc',
       },
       where: {
-        name: Like(`${employeeSearchData}%`),
+        name: Like(`${value}%`),
       },
     });
-    console.log(employeeFindByName);
 
     if (!employeeFindByName) {
       throw new InternalServerErrorException(
@@ -192,7 +191,7 @@ export class EmployeesService {
   }
 
   async FindByRole(paginationDTO: PaginationDTO) {
-    const { limit = 5, offset = 5, employeeSearchData } = paginationDTO;
+    const { limit, offset, value } = paginationDTO;
 
     const employeeFindByRole = await this.employeeRepository.find({
       take: limit,
@@ -201,7 +200,7 @@ export class EmployeesService {
         id: 'desc',
       },
       where: {
-        role: employeeSearchData,
+        role: value,
       },
     });
 
@@ -219,7 +218,7 @@ export class EmployeesService {
   }
 
   async FindBySituation(paginationDTO: PaginationDTO) {
-    const { limit = 5, offset = 5, employeeSearchData } = paginationDTO;
+    const { limit, offset, value } = paginationDTO;
 
     const employeeFindBySituation = await this.employeeRepository.find({
       take: limit,
@@ -228,7 +227,7 @@ export class EmployeesService {
         id: 'desc',
       },
       where: {
-        situation: employeeSearchData,
+        situation: value,
       },
     });
 
@@ -246,7 +245,7 @@ export class EmployeesService {
   }
 
   async FindByWorkdayBegin(paginationDTO: PaginationDTO) {
-    const { limit = 5, offset = 5, employeeSearchData } = paginationDTO;
+    const { limit, offset, value } = paginationDTO;
 
     const employeeFindByWorkdayBegin = await this.employeeRepository.find({
       take: limit,
@@ -255,7 +254,7 @@ export class EmployeesService {
         id: 'desc',
       },
       where: {
-        workday_begin: Like(`${employeeSearchData}%`),
+        workday_begin: Like(`${value}%`),
       },
     });
 
@@ -273,7 +272,7 @@ export class EmployeesService {
   }
 
   async FindByWorkdayEnd(paginationDTO: PaginationDTO) {
-    const { limit = 5, offset = 5, employeeSearchData } = paginationDTO;
+    const { limit, offset, value } = paginationDTO;
 
     const employeeFindByWorkdayEnd = await this.employeeRepository.find({
       take: limit,
@@ -282,7 +281,7 @@ export class EmployeesService {
         id: 'desc',
       },
       where: {
-        workday_end: Like(`${employeeSearchData}%`),
+        workday_end: Like(`${value}%`),
       },
     });
 

@@ -17,11 +17,11 @@ export class PaginationDTO {
   @IsInt({
     message: 'Offset precisa ser um numero inteiro',
   })
-  @Min(1, {
-    message: 'Offser deve ser maior que 0',
+  @Min(0, {
+    message: 'Offser não deve ser menor que 0',
   })
   @Type(() => Number)
   offset: number;
 
-  employeeSearchData: string;
+  value: string;
 }

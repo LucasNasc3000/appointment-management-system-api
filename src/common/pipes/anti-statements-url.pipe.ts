@@ -16,12 +16,9 @@ export class AntiStatementUrl implements PipeTransform {
       'AND',
       'NOT',
       '/',
-      '-',
       'FROM',
       '*',
     ];
-    console.log(metadata);
-    console.log(value);
 
     if (metadata.type !== 'param' && metadata.type !== 'query') {
       throw new BadRequestException('metadata type must be "param" or "query"');

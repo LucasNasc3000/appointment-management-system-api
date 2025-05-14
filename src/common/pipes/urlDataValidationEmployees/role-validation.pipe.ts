@@ -6,20 +6,15 @@ import {
 } from '@nestjs/common';
 
 @Injectable()
-export class FindByNameValidation implements PipeTransform {
+export class FindByRoleValidation implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {
-    const alphabetRegex = /^[a-zA-Z]+$/;
-    const name = String(value.value);
+    const role = String(value.value);
 
     if (metadata.type !== 'query') {
       throw new BadRequestException('metadata type must be "query"');
     }
 
-    if (name.length > 125) {
-      throw new BadRequestException('Formato inválido');
-    }
-
-    if (!alphabetRegex.test(name)) {
+    if (role.length < 5 || role.length > 15) {
       throw new BadRequestException('Formato inválido');
     }
 

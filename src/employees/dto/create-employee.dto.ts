@@ -70,7 +70,8 @@ export class CreateEmployeeDTO {
     message: 'campo "situação" deve estar em formato de texto',
   })
   @Length(8, 9, {
-    message: 'campo "situação" deve ser "empregado" ou "demitido',
+    message:
+      'campo "situação" deve ser "empregado", "demitido", "afastado" ou "sob aviso"',
   })
   readonly situation: string;
 
