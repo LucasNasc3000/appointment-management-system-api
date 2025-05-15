@@ -7,6 +7,7 @@ import {
 
 @Injectable()
 export class ParseToHourPipe implements PipeTransform {
+  // Ver como validar url de updates
   transform(value: any, metadata: ArgumentMetadata) {
     const { workday_begin } = value;
     const { workday_end } = value;

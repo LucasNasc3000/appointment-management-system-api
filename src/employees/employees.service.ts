@@ -19,6 +19,7 @@ export class EmployeesService {
   ) {}
 
   async Create(createEmployeeDTO: CreateEmployeeDTO) {
+    // Tirar o hash da senha do retorno posteriormente
     const employeeCreate = this.employeeRepository.create(createEmployeeDTO);
 
     this.employeeRepository.save(employeeCreate);
@@ -95,7 +96,7 @@ export class EmployeesService {
 
     if (!employeeUpdate) {
       throw new InternalServerErrorException(
-        'Erro ao tentar atualizar funcionário',
+        'Erro ao tentar atualizar dados de funcionário',
       );
     }
 
