@@ -8,8 +8,8 @@ export class PaginationDTO {
   @Min(0, {
     message: 'Limite não pode ser menor que 0',
   })
-  @Max(20, {
-    message: 'Limite não pode ser maior que 20',
+  @Max(10, {
+    message: 'Limite não pode ser maior que 10',
   })
   @Type(() => Number)
   limit: number;

@@ -4,8 +4,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { CreatePatientDTO } from './dto/create-patient.dto';
+import { PaginationDTO } from './dto/pagination-patient.dto';
 import { UpdatePatientDTO } from './dto/update-patient.dto';
 import { Patient } from './entities/patient.entity';
 
@@ -92,5 +93,56 @@ export class PatientsService {
     }
 
     return patientFindByEmail;
+  }
+
+  async FindByName(paginationDTO: PaginationDTO) {
+    const { limit, offset, value } = paginationDTO;
+
+    const patientFindByName = await this.patientRepository.find({
+      take: limit,
+      skip: offset,
+      order: {
+        id: 'desc',
+      },
+      where: {
+        name: Like(`${value}%`),
+      },
+    });
+
+    if (!patientFindByName) {
+      throw new InternalServerErrorException(
+        'Erro desconhecido ao tentar pesquisar por pacientes',
+      );
+    }
+
+    if (patientFindByName.length < 1) {
+      throw new NotFoundException('Pacientes não encontrados');
+    }
+
+    return patientFindByName;
+  }
+
+  async FindByPhoneNumber(phoneNumber: string) {
+    const patientFindByPhoneNumber = await this.patientRepository.findOneBy({
+      phone_number: phoneNumber,
+    });
+
+    if (!patientFindByPhoneNumber) {
+      throw new NotFoundException('Paciente não encontrado');
+    }
+
+    return patientFindByPhoneNumber;
+  }
+
+  async FindByAddress(address: string) {
+    const patientFindByAddress = await this.patientRepository.findOneBy({
+      address: address,
+    });
+
+    if (!patientFindByAddress) {
+      throw new NotFoundException('Paciente não encontrado');
+    }
+
+    return patientFindByAddress;
   }
 }

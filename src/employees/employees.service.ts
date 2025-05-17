@@ -167,9 +167,9 @@ export class EmployeesService {
     return employeeFindByName;
   }
 
-  async FindByPhoneNumber(PhoneNumber: string) {
+  async FindByPhoneNumber(phoneNumber: string) {
     const employeeFindByPhoneNumber = await this.employeeRepository.findOneBy({
-      phone_number: PhoneNumber,
+      phone_number: phoneNumber,
     });
 
     if (!employeeFindByPhoneNumber) {
