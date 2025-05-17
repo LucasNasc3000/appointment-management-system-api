@@ -57,4 +57,40 @@ export class PatientsService {
 
     return this.patientRepository.save(patientUpdate);
   }
+
+  async FindById(id: string) {
+    const patientFindById = await this.patientRepository.findOneBy({
+      id,
+    });
+
+    if (!patientFindById) {
+      throw new NotFoundException('Paciente não encontrado');
+    }
+
+    return patientFindById;
+  }
+
+  async FindByCpf(cpf: string) {
+    const patientFindByCpf = await this.patientRepository.findOneBy({
+      cpf,
+    });
+
+    if (!patientFindByCpf) {
+      throw new NotFoundException('Paciente não encontrado');
+    }
+
+    return patientFindByCpf;
+  }
+
+  async FindByEmail(email: string) {
+    const patientFindByEmail = await this.patientRepository.findOneBy({
+      email,
+    });
+
+    if (!patientFindByEmail) {
+      throw new NotFoundException('Paciente não encontrado');
+    }
+
+    return patientFindByEmail;
+  }
 }
