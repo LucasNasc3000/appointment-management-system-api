@@ -26,11 +26,11 @@ export class Doctor {
 
   @Column({ type: 'varchar', length: 255 })
   @IsString()
-  passwordHash: string;
+  password_hash: string;
 
   @Column({ type: 'varchar', length: 100 })
   @IsString()
-  specialty: string;
+  specialties: string;
 
   @Column({ type: 'varchar', length: 13, unique: true })
   @IsString()

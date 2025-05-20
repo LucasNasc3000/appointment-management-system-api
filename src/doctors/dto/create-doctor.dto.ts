@@ -55,7 +55,7 @@ export class CreateDoctorDTO {
   @Length(0, 100, {
     message: 'campo "especialidade" deve ter no máximo 100 caracteres',
   })
-  readonly specialty: string;
+  readonly specialties: string;
 
   @IsNotEmpty({
     message: 'campo "crm" não preenchido',
