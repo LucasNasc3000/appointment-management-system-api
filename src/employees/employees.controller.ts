@@ -1,24 +1,24 @@
 import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Query,
-  UsePipes,
+    Body,
+    Controller,
+    Get,
+    Param,
+    Patch,
+    Post,
+    Query,
+    UsePipes,
 } from '@nestjs/common';
 import { AntiStatementUrl } from 'src/common/pipes/anti-statements-url.pipe';
 import { ParseToHourPipe } from 'src/common/pipes/hour-validation.pipe';
-import { FindByAddressValidation } from 'src/common/pipes/urlDataValidationForSearch/address-validation.pipe';
-import { FindByCpfValidation } from 'src/common/pipes/urlDataValidationForSearch/cpf-validation.pipe';
-import { FindByEmailValidation } from 'src/common/pipes/urlDataValidationForSearch/email-validation.pipe';
-import { FindByWorkday } from 'src/common/pipes/urlDataValidationForSearch/hour-validation.pipe';
-import { FindByIdValidation } from 'src/common/pipes/urlDataValidationForSearch/id-validation.pipe';
-import { FindByNameValidation } from 'src/common/pipes/urlDataValidationForSearch/name-validation.pipe';
-import { FindByPhoneNumberValidation } from 'src/common/pipes/urlDataValidationForSearch/phone-number-validation.pipe';
-import { FindByRoleValidation } from 'src/common/pipes/urlDataValidationForSearch/role-validation.pipe';
-import { FindBySituationValidation } from 'src/common/pipes/urlDataValidationForSearch/situation-validation.pipe';
+import { FindByAddressValidation } from 'src/common/pipes/url-data-validation-for-search/address-validation.pipe';
+import { FindByCpfValidation } from 'src/common/pipes/url-data-validation-for-search/cpf-validation.pipe';
+import { FindByEmailValidation } from 'src/common/pipes/url-data-validation-for-search/email-validation.pipe';
+import { FindByWorkday } from 'src/common/pipes/url-data-validation-for-search/hour-validation.pipe';
+import { FindByIdValidation } from 'src/common/pipes/url-data-validation-for-search/id-validation.pipe';
+import { FindByNameValidation } from 'src/common/pipes/url-data-validation-for-search/name-validation.pipe';
+import { FindByPhoneNumberValidation } from 'src/common/pipes/url-data-validation-for-search/phone-number-validation.pipe';
+import { FindByRoleValidation } from 'src/common/pipes/url-data-validation-for-search/role-validation.pipe';
+import { FindBySituationValidation } from 'src/common/pipes/url-data-validation-for-search/situation-validation.pipe';
 import { CreateEmployeeDTO } from './dto/create-employee.dto';
 import { PaginationDTO } from './dto/pagination-employee.dto';
 import { UpdateEmployeeAdminDTO } from './dto/update-employee-admin.dto';

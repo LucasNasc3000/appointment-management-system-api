@@ -9,11 +9,11 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { AntiStatementUrl } from 'src/common/pipes/anti-statements-url.pipe';
-import { FindByAddressValidation } from 'src/common/pipes/urlDataValidationForSearch/address-validation.pipe';
-import { FindByEmailValidation } from 'src/common/pipes/urlDataValidationForSearch/email-validation.pipe';
-import { FindByIdValidation } from 'src/common/pipes/urlDataValidationForSearch/id-validation.pipe';
-import { FindByNameValidation } from 'src/common/pipes/urlDataValidationForSearch/name-validation.pipe';
-import { FindByPhoneNumberValidation } from 'src/common/pipes/urlDataValidationForSearch/phone-number-validation.pipe';
+import { FindByAddressValidation } from 'src/common/pipes/url-data-validation-for-search/address-validation.pipe';
+import { FindByEmailValidation } from 'src/common/pipes/url-data-validation-for-search/email-validation.pipe';
+import { FindByIdValidation } from 'src/common/pipes/url-data-validation-for-search/id-validation.pipe';
+import { FindByNameValidation } from 'src/common/pipes/url-data-validation-for-search/name-validation.pipe';
+import { FindByPhoneNumberValidation } from 'src/common/pipes/url-data-validation-for-search/phone-number-validation.pipe';
 import { CreatePatientDTO } from './dto/create-patient.dto';
 import { PaginationDTO } from './dto/pagination-patient.dto';
 import { UpdatePatientDTO } from './dto/update-patient.dto';
