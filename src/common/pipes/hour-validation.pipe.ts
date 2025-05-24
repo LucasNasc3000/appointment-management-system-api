@@ -5,10 +5,7 @@ import { hourRegex } from '../constants/hour-regex';
 export class ParseToHourPipe implements PipeTransform {
   // Ver como validar url de updates
   transform(value: any) {
-    const { workday_begin } = value;
-    const { workday_end } = value;
-    const { hour_to } = value;
-    const { hour_from } = value;
+    const { workday_begin, workday_end, hour_from, hour_to } = value;
 
     if (workday_begin && workday_end) {
       if (!hourRegex.test(workday_begin) || !hourRegex.test(workday_end)) {
