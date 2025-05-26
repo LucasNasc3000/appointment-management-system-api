@@ -1,14 +1,15 @@
 import {
-    Body,
-    Controller,
-    Get,
-    Param,
-    Patch,
-    Post,
-    Query,
-    UsePipes,
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UsePipes,
 } from '@nestjs/common';
 import { AntiStatementUrl } from 'src/common/pipes/anti-statements-url.pipe';
+import { ParseToHourPipeUpdate } from 'src/common/pipes/hour-validation-update.pipe';
 import { ParseToHourPipe } from 'src/common/pipes/hour-validation.pipe';
 import { FindByAddressValidation } from 'src/common/pipes/url-data-validation-for-search/address-validation.pipe';
 import { FindByCpfValidation } from 'src/common/pipes/url-data-validation-for-search/cpf-validation.pipe';
@@ -37,6 +38,7 @@ export class EmployeesController {
   }
 
   @Patch('/update/self/:id')
+  @UsePipes(ParseToHourPipeUpdate, AntiStatementUrl)
   UpdateSelf(
     @Param('id') id: string,
     @Body() updateEmployeeDTO: UpdateEmployeeDTO,
@@ -45,6 +47,7 @@ export class EmployeesController {
   }
 
   @Patch('/update/admin/:id')
+  @UsePipes(AntiStatementUrl, ParseToHourPipeUpdate)
   UpdateAdmin(
     @Param('id') id: string,
     @Body() updateEmployeeAdminDTO: UpdateEmployeeAdminDTO,

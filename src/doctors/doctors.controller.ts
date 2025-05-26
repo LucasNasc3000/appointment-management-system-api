@@ -1,4 +1,5 @@
 import { Body, Controller, Param, Patch, Post, UsePipes } from '@nestjs/common';
+import { AntiStatementUrl } from 'src/common/pipes/anti-statements-url.pipe';
 import { ParseToHourPipeUpdate } from 'src/common/pipes/hour-validation-update.pipe';
 import { ParseToHourPipe } from 'src/common/pipes/hour-validation.pipe';
 import { DoctorUpdateAdminRestrictions } from 'src/common/pipes/updateRestrictions/doctor/update-admin.pipe';
@@ -13,13 +14,17 @@ export class DoctorsController {
   constructor(private readonly doctorsService: DoctorsService) {}
 
   @Post()
-  @UsePipes(ParseToHourPipe)
+  @UsePipes(AntiStatementUrl, ParseToHourPipe)
   Create(@Body() body: CreateDoctorDTO) {
     return this.doctorsService.Create(body);
   }
 
   @Patch('/update/self/:id')
-  @UsePipes(DoctorUpdateSelfRestrictions, ParseToHourPipeUpdate)
+  @UsePipes(
+    AntiStatementUrl,
+    DoctorUpdateSelfRestrictions,
+    ParseToHourPipeUpdate,
+  )
   UpdateSelf(
     @Param('id') id: string,
     @Body() updateDoctorDTO: UpdateDoctorDTO,
@@ -28,7 +33,11 @@ export class DoctorsController {
   }
 
   @Patch('/update/admin/:id')
-  @UsePipes(DoctorUpdateAdminRestrictions, ParseToHourPipeUpdate)
+  @UsePipes(
+    AntiStatementUrl,
+    DoctorUpdateAdminRestrictions,
+    ParseToHourPipeUpdate,
+  )
   UpdateAdmin(
     @Param('id') id: string,
     @Body() updateDoctorAdminDTO: UpdateDoctorAdminDTO,
