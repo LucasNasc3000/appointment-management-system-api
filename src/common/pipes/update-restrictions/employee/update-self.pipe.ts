@@ -1,29 +1,20 @@
 import {
-  ArgumentMetadata,
   BadRequestException,
   ForbiddenException,
   Injectable,
   PipeTransform,
 } from '@nestjs/common';
-import { uuidCheck } from 'src/common/constants/uuid-regex';
 
 @Injectable()
-export class DoctorUpdateSelfRestrictions implements PipeTransform {
-  transform(value: any, metadata: ArgumentMetadata) {
-    const urlValue = String(value);
+export class EmployeeUpdateSelfRestrictions implements PipeTransform {
+  transform(value: any) {
     const forbiddenKeys = [
       'cpf',
-      'crm',
-      'specialties',
-      'academic_degree',
+      'role',
       'situation',
       'workday_begin',
       'workday_end',
     ];
-
-    if (metadata.type === 'param' && !uuidCheck.test(urlValue)) {
-      throw new BadRequestException('Formato da url inválido');
-    }
 
     if (typeof value === 'object' && Object.keys(value).length < 1) {
       throw new BadRequestException('Nenhum dado enviado para atualização');

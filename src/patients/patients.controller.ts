@@ -8,13 +8,14 @@ import {
   Query,
   UsePipes,
 } from '@nestjs/common';
-import { AntiStatementUrl } from 'src/common/pipes/anti-statements-url.pipe';
+import { AntiStatementUrl } from 'src/common/pipes/commom-pipes/anti-statements-url.pipe';
+import { UUIDValidatorForUpdates } from 'src/common/pipes/commom-pipes/uuid-validation-updates.pipe';
+import { PatientUpdateSelfRestrictions } from 'src/common/pipes/update-restrictions/patient/update-self.pipe';
 import { FindByAddressValidation } from 'src/common/pipes/url-data-validation-for-search/address-validation.pipe';
 import { FindByEmailValidation } from 'src/common/pipes/url-data-validation-for-search/email-validation.pipe';
 import { FindByIdValidation } from 'src/common/pipes/url-data-validation-for-search/id-validation.pipe';
 import { FindByNameValidation } from 'src/common/pipes/url-data-validation-for-search/name-validation.pipe';
 import { FindByPhoneNumberValidation } from 'src/common/pipes/url-data-validation-for-search/phone-number-validation.pipe';
-import { UUIDValidatorForUpdates } from 'src/common/pipes/uuid-validation-updates.pipe';
 import { CreatePatientDTO } from './dto/create-patient.dto';
 import { PaginationDTO } from './dto/pagination-patient.dto';
 import { UpdatePatientDTO } from './dto/update-patient.dto';
@@ -30,7 +31,11 @@ export class PatientsController {
   }
 
   @Patch(':id')
-  @UsePipes(AntiStatementUrl, UUIDValidatorForUpdates)
+  @UsePipes(
+    AntiStatementUrl,
+    UUIDValidatorForUpdates,
+    PatientUpdateSelfRestrictions,
+  )
   Update(@Param('id') id: string, @Body() updatePatientDTO: UpdatePatientDTO) {
     return this.patientService.Update(id, updatePatientDTO);
   }

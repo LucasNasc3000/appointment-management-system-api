@@ -1,10 +1,10 @@
 import { Body, Controller, Param, Patch, Post, UsePipes } from '@nestjs/common';
-import { AntiStatementUrl } from 'src/common/pipes/anti-statements-url.pipe';
-import { ParseToHourPipeUpdate } from 'src/common/pipes/hour-validation-update.pipe';
-import { ParseToHourPipe } from 'src/common/pipes/hour-validation.pipe';
-import { DoctorUpdateAdminRestrictions } from 'src/common/pipes/updateRestrictions/doctor/update-admin.pipe';
-import { DoctorUpdateSelfRestrictions } from 'src/common/pipes/updateRestrictions/doctor/update-self.pipe';
-import { UUIDValidatorForUpdates } from 'src/common/pipes/uuid-validation-updates.pipe';
+import { AntiStatementUrl } from 'src/common/pipes/commom-pipes/anti-statements-url.pipe';
+import { ParseToHourPipeUpdate } from 'src/common/pipes/commom-pipes/hour-validation-update.pipe';
+import { ParseToHourPipe } from 'src/common/pipes/commom-pipes/hour-validation.pipe';
+import { UUIDValidatorForUpdates } from 'src/common/pipes/commom-pipes/uuid-validation-updates.pipe';
+import { DoctorUpdateAdminRestrictions } from 'src/common/pipes/update-restrictions/doctor/update-admin.pipe';
+import { DoctorUpdateSelfRestrictions } from 'src/common/pipes/update-restrictions/doctor/update-self.pipe';
 import { DoctorsService } from './doctors.service';
 import { CreateDoctorDTO } from './dto/create-doctor.dto';
 import { UpdateDoctorAdminDTO } from './dto/update-doctor-admin.dto';

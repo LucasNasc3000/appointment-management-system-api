@@ -8,9 +8,12 @@ import {
   Query,
   UsePipes,
 } from '@nestjs/common';
-import { AntiStatementUrl } from 'src/common/pipes/anti-statements-url.pipe';
-import { ParseToHourPipeUpdate } from 'src/common/pipes/hour-validation-update.pipe';
-import { ParseToHourPipe } from 'src/common/pipes/hour-validation.pipe';
+import { AntiStatementUrl } from 'src/common/pipes/commom-pipes/anti-statements-url.pipe';
+import { ParseToHourPipeUpdate } from 'src/common/pipes/commom-pipes/hour-validation-update.pipe';
+import { ParseToHourPipe } from 'src/common/pipes/commom-pipes/hour-validation.pipe';
+import { UUIDValidatorForUpdates } from 'src/common/pipes/commom-pipes/uuid-validation-updates.pipe';
+import { EmployeeUpdateAdminRestrictions } from 'src/common/pipes/update-restrictions/employee/update-admin.pipe';
+import { EmployeeUpdateSelfRestrictions } from 'src/common/pipes/update-restrictions/employee/update-self.pipe';
 import { FindByAddressValidation } from 'src/common/pipes/url-data-validation-for-search/address-validation.pipe';
 import { FindByCpfValidation } from 'src/common/pipes/url-data-validation-for-search/cpf-validation.pipe';
 import { FindByEmailValidation } from 'src/common/pipes/url-data-validation-for-search/email-validation.pipe';
@@ -20,7 +23,6 @@ import { FindByNameValidation } from 'src/common/pipes/url-data-validation-for-s
 import { FindByPhoneNumberValidation } from 'src/common/pipes/url-data-validation-for-search/phone-number-validation.pipe';
 import { FindByRoleValidation } from 'src/common/pipes/url-data-validation-for-search/role-validation.pipe';
 import { FindBySituationValidation } from 'src/common/pipes/url-data-validation-for-search/situation-validation.pipe';
-import { UUIDValidatorForUpdates } from 'src/common/pipes/uuid-validation-updates.pipe';
 import { CreateEmployeeDTO } from './dto/create-employee.dto';
 import { PaginationDTO } from './dto/pagination-employee.dto';
 import { UpdateEmployeeAdminDTO } from './dto/update-employee-admin.dto';
@@ -39,7 +41,12 @@ export class EmployeesController {
   }
 
   @Patch('/update/self/:id')
-  @UsePipes(ParseToHourPipeUpdate, AntiStatementUrl, UUIDValidatorForUpdates)
+  @UsePipes(
+    AntiStatementUrl,
+    UUIDValidatorForUpdates,
+    ParseToHourPipeUpdate,
+    EmployeeUpdateSelfRestrictions,
+  )
   UpdateSelf(
     @Param('id') id: string,
     @Body() updateEmployeeDTO: UpdateEmployeeDTO,
@@ -48,7 +55,12 @@ export class EmployeesController {
   }
 
   @Patch('/update/admin/:id')
-  @UsePipes(AntiStatementUrl, ParseToHourPipeUpdate, UUIDValidatorForUpdates)
+  @UsePipes(
+    AntiStatementUrl,
+    UUIDValidatorForUpdates,
+    ParseToHourPipeUpdate,
+    EmployeeUpdateAdminRestrictions,
+  )
   UpdateAdmin(
     @Param('id') id: string,
     @Body() updateEmployeeAdminDTO: UpdateEmployeeAdminDTO,
