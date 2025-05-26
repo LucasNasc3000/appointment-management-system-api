@@ -4,6 +4,7 @@ import { ParseToHourPipeUpdate } from 'src/common/pipes/hour-validation-update.p
 import { ParseToHourPipe } from 'src/common/pipes/hour-validation.pipe';
 import { DoctorUpdateAdminRestrictions } from 'src/common/pipes/updateRestrictions/doctor/update-admin.pipe';
 import { DoctorUpdateSelfRestrictions } from 'src/common/pipes/updateRestrictions/doctor/update-self.pipe';
+import { UUIDValidatorForUpdates } from 'src/common/pipes/uuid-validation-updates.pipe';
 import { DoctorsService } from './doctors.service';
 import { CreateDoctorDTO } from './dto/create-doctor.dto';
 import { UpdateDoctorAdminDTO } from './dto/update-doctor-admin.dto';
@@ -14,7 +15,7 @@ export class DoctorsController {
   constructor(private readonly doctorsService: DoctorsService) {}
 
   @Post()
-  @UsePipes(AntiStatementUrl, ParseToHourPipe)
+  @UsePipes(ParseToHourPipe)
   Create(@Body() body: CreateDoctorDTO) {
     return this.doctorsService.Create(body);
   }
@@ -22,6 +23,7 @@ export class DoctorsController {
   @Patch('/update/self/:id')
   @UsePipes(
     AntiStatementUrl,
+    UUIDValidatorForUpdates,
     DoctorUpdateSelfRestrictions,
     ParseToHourPipeUpdate,
   )
@@ -35,6 +37,7 @@ export class DoctorsController {
   @Patch('/update/admin/:id')
   @UsePipes(
     AntiStatementUrl,
+    UUIDValidatorForUpdates,
     DoctorUpdateAdminRestrictions,
     ParseToHourPipeUpdate,
   )

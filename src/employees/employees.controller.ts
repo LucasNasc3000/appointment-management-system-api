@@ -20,6 +20,7 @@ import { FindByNameValidation } from 'src/common/pipes/url-data-validation-for-s
 import { FindByPhoneNumberValidation } from 'src/common/pipes/url-data-validation-for-search/phone-number-validation.pipe';
 import { FindByRoleValidation } from 'src/common/pipes/url-data-validation-for-search/role-validation.pipe';
 import { FindBySituationValidation } from 'src/common/pipes/url-data-validation-for-search/situation-validation.pipe';
+import { UUIDValidatorForUpdates } from 'src/common/pipes/uuid-validation-updates.pipe';
 import { CreateEmployeeDTO } from './dto/create-employee.dto';
 import { PaginationDTO } from './dto/pagination-employee.dto';
 import { UpdateEmployeeAdminDTO } from './dto/update-employee-admin.dto';
@@ -38,7 +39,7 @@ export class EmployeesController {
   }
 
   @Patch('/update/self/:id')
-  @UsePipes(ParseToHourPipeUpdate, AntiStatementUrl)
+  @UsePipes(ParseToHourPipeUpdate, AntiStatementUrl, UUIDValidatorForUpdates)
   UpdateSelf(
     @Param('id') id: string,
     @Body() updateEmployeeDTO: UpdateEmployeeDTO,
@@ -47,7 +48,7 @@ export class EmployeesController {
   }
 
   @Patch('/update/admin/:id')
-  @UsePipes(AntiStatementUrl, ParseToHourPipeUpdate)
+  @UsePipes(AntiStatementUrl, ParseToHourPipeUpdate, UUIDValidatorForUpdates)
   UpdateAdmin(
     @Param('id') id: string,
     @Body() updateEmployeeAdminDTO: UpdateEmployeeAdminDTO,

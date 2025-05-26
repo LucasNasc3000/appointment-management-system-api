@@ -1,5 +1,4 @@
 import {
-  ArgumentMetadata,
   BadRequestException,
   ForbiddenException,
   Injectable,
@@ -8,15 +7,7 @@ import {
 
 @Injectable()
 export class DoctorUpdateAdminRestrictions implements PipeTransform {
-  transform(value: any, metadata: ArgumentMetadata) {
-    const urlValue = String(value);
-    const uuidCheck =
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
-    if (metadata.type === 'param' && !uuidCheck.test(urlValue)) {
-      throw new BadRequestException('Formato da url inválido');
-    }
-
+  transform(value: any) {
     if (typeof value === 'object' && Object.keys(value).length < 1) {
       throw new BadRequestException('Nenhum dado enviado para atualização');
     }

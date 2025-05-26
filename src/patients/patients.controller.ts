@@ -14,6 +14,7 @@ import { FindByEmailValidation } from 'src/common/pipes/url-data-validation-for-
 import { FindByIdValidation } from 'src/common/pipes/url-data-validation-for-search/id-validation.pipe';
 import { FindByNameValidation } from 'src/common/pipes/url-data-validation-for-search/name-validation.pipe';
 import { FindByPhoneNumberValidation } from 'src/common/pipes/url-data-validation-for-search/phone-number-validation.pipe';
+import { UUIDValidatorForUpdates } from 'src/common/pipes/uuid-validation-updates.pipe';
 import { CreatePatientDTO } from './dto/create-patient.dto';
 import { PaginationDTO } from './dto/pagination-patient.dto';
 import { UpdatePatientDTO } from './dto/update-patient.dto';
@@ -29,6 +30,7 @@ export class PatientsController {
   }
 
   @Patch(':id')
+  @UsePipes(AntiStatementUrl, UUIDValidatorForUpdates)
   Update(@Param('id') id: string, @Body() updatePatientDTO: UpdatePatientDTO) {
     return this.patientService.Update(id, updatePatientDTO);
   }

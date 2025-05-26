@@ -5,14 +5,6 @@ import { hourRegex } from '../constants/hour-regex';
 export class ParseToHourPipeUpdate implements PipeTransform {
   transform(value: any) {
     const hourFields = ['workday_begin', 'workday_end', 'hour_from', 'hour_to'];
-    const uuidCheck =
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
-    if (typeof value === 'string') {
-      if (!uuidCheck.test(value)) {
-        throw new BadRequestException('Formato inválido na url');
-      }
-    }
 
     if (typeof value === 'object') {
       hourFields.forEach((element) => {
