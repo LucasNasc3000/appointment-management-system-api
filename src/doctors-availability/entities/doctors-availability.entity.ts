@@ -27,8 +27,8 @@ export class DoctorsAvailability {
   situation: string;
 
   @ManyToOne(() => Doctor, { onDelete: 'RESTRICT' })
-  @JoinColumn({ name: 'doctor_id' })
-  doctor_id: Doctor;
+  @JoinColumn({ name: 'doctor' })
+  doctor: Doctor;
 
   @CreateDateColumn()
   createdAt?: Date;

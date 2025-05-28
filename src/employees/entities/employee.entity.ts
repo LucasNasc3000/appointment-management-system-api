@@ -35,10 +35,10 @@ export class Employee {
   @Column({ type: 'varchar', length: 9 })
   situation: string;
 
-  @Column({ type: 'varchar', length: 8 })
+  @Column({ type: 'time' })
   workday_begin: string;
 
-  @Column({ type: 'varchar', length: 8 })
+  @Column({ type: 'time' })
   workday_end: string;
 
   @Column({ type: 'varchar', length: 15 })

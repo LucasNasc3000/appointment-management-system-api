@@ -99,9 +99,11 @@ export class DoctorsService {
     return this.doctorRepository.save(doctorUpdate);
   }
 
-  async FindById(id: string) {
+  async FindById(id: string | Doctor) {
+    const stringFormatId = String(id);
+
     const doctorFindById = await this.doctorRepository.findOneBy({
-      id,
+      id: stringFormatId,
     });
 
     if (!doctorFindById) {

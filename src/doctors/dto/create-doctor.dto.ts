@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
+import { DoctorsAvailability } from 'src/doctors-availability/entities/doctors-availability.entity';
 
 export class CreateDoctorDTO {
   @IsNotEmpty({
@@ -121,4 +122,9 @@ export class CreateDoctorDTO {
     message: 'O campo "endereço não deve passar dos 100 caracteres',
   })
   readonly address: string;
+
+  @IsNotEmpty({
+    message: 'campo "disponibilidade" não preenchido',
+  })
+  readonly availability: DoctorsAvailability[];
 }

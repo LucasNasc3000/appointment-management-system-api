@@ -1,4 +1,5 @@
 import { IsDate, IsNotEmpty, IsString, IsUUID, Length } from 'class-validator';
+import { Doctor } from 'src/doctors/entities/doctor.entity';
 
 export class CreateDoctorsAvailabilityDTO {
   @IsNotEmpty({
@@ -36,5 +37,5 @@ export class CreateDoctorsAvailabilityDTO {
   @IsUUID(4, {
     message: 'campo "doctor_id" deve ser um uuid',
   })
-  readonly doctor_id: string;
+  readonly doctor: Doctor;
 }

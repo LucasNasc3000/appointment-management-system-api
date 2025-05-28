@@ -1,8 +1,10 @@
 import { IsEmail, IsString } from 'class-validator';
+import { DoctorsAvailability } from 'src/doctors-availability/entities/doctors-availability.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -56,6 +58,12 @@ export class Doctor {
   @Column({ type: 'varchar', length: 100 })
   @IsString()
   address: string;
+
+  @OneToMany(
+    () => DoctorsAvailability,
+    (doctorAvailability) => doctorAvailability.doctor,
+  )
+  availability: DoctorsAvailability[];
 
   @CreateDateColumn()
   createdAt?: Date;
