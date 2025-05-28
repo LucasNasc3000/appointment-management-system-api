@@ -6,21 +6,25 @@ import {
 } from '@nestjs/common';
 
 @Injectable()
-export class FindByCpfValidation implements PipeTransform {
+export class FindByCrmValidation implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {
-    const cpf = String(value);
+    const crm = String(value);
 
     if (metadata.type !== 'param') {
       throw new BadRequestException('metadata type must be "param"');
     }
 
-    if (cpf.length < 14 || cpf.length > 14) {
+    if (crm.length < 13 || crm.length > 13) {
       throw new BadRequestException('Formato inválido');
     }
 
-    if (cpf[3] !== '.' || cpf[7] !== '.' || cpf[11] !== '-') {
+    if (crm[3] !== '-' || crm[6] !== ' ') {
       throw new BadRequestException('Formato inválido');
     }
+
+    const correctFormat = crm.replace('-', '/');
+
+    value = correctFormat;
 
     return value;
   }

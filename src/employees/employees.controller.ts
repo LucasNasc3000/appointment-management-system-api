@@ -17,7 +17,7 @@ import { EmployeeUpdateSelfRestrictions } from 'src/common/pipes/update-restrict
 import { FindByAddressValidation } from 'src/common/pipes/url-data-validation-for-search/address-validation.pipe';
 import { FindByCpfValidation } from 'src/common/pipes/url-data-validation-for-search/cpf-validation.pipe';
 import { FindByEmailValidation } from 'src/common/pipes/url-data-validation-for-search/email-validation.pipe';
-import { FindByWorkday } from 'src/common/pipes/url-data-validation-for-search/hour-validation.pipe';
+import { FindByHourField } from 'src/common/pipes/url-data-validation-for-search/hour-validation.pipe';
 import { FindByIdValidation } from 'src/common/pipes/url-data-validation-for-search/id-validation.pipe';
 import { FindByNameValidation } from 'src/common/pipes/url-data-validation-for-search/name-validation.pipe';
 import { FindByPhoneNumberValidation } from 'src/common/pipes/url-data-validation-for-search/phone-number-validation.pipe';
@@ -117,13 +117,13 @@ export class EmployeesController {
   }
 
   @Get('/search/workdayBegin/')
-  @UsePipes(AntiStatementUrl, FindByWorkday)
+  @UsePipes(AntiStatementUrl, FindByHourField)
   FindByWorkdayBegin(@Query() paginationDto: PaginationDTO) {
     return this.employeeService.FindByWorkdayBegin(paginationDto);
   }
 
   @Get('/search/workdayEnd/')
-  @UsePipes(AntiStatementUrl, FindByWorkday)
+  @UsePipes(AntiStatementUrl, FindByHourField)
   FindByWorkdayEnd(@Query() paginationDto: PaginationDTO) {
     return this.employeeService.FindByWorkdayEnd(paginationDto);
   }

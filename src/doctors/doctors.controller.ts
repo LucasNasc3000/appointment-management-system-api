@@ -16,8 +16,9 @@ import { DoctorUpdateAdminRestrictions } from 'src/common/pipes/update-restricti
 import { DoctorUpdateSelfRestrictions } from 'src/common/pipes/update-restrictions/doctor/update-self.pipe';
 import { FindByAddressValidation } from 'src/common/pipes/url-data-validation-for-search/address-validation.pipe';
 import { FindByCpfValidation } from 'src/common/pipes/url-data-validation-for-search/cpf-validation.pipe';
+import { FindByCrmValidation } from 'src/common/pipes/url-data-validation-for-search/crm-validation.pipe';
 import { FindByEmailValidation } from 'src/common/pipes/url-data-validation-for-search/email-validation.pipe';
-import { FindByWorkday } from 'src/common/pipes/url-data-validation-for-search/hour-validation.pipe';
+import { FindByHourField } from 'src/common/pipes/url-data-validation-for-search/hour-validation.pipe';
 import { FindByIdValidation } from 'src/common/pipes/url-data-validation-for-search/id-validation.pipe';
 import { FindByNameValidation } from 'src/common/pipes/url-data-validation-for-search/name-validation.pipe';
 import { FindByPhoneNumberValidation } from 'src/common/pipes/url-data-validation-for-search/phone-number-validation.pipe';
@@ -84,6 +85,12 @@ export class DoctorsController {
     return this.doctorService.FindByCpf(cpf);
   }
 
+  @Get('/search/crm/:crm')
+  @UsePipes(AntiStatementUrl, FindByCrmValidation)
+  FindByCrm(@Param('crm') crm: string) {
+    return this.doctorService.FindByCrm(crm);
+  }
+
   @Get('/search/phoneNumber/:phoneNumber')
   @UsePipes(AntiStatementUrl, FindByPhoneNumberValidation)
   FindByPhoneNumber(@Param('phoneNumber') phoneNumber: string) {
@@ -121,13 +128,13 @@ export class DoctorsController {
   }
 
   @Get('/search/workdayBegin/')
-  @UsePipes(AntiStatementUrl, FindByWorkday)
+  @UsePipes(AntiStatementUrl, FindByHourField)
   FindByWorkdayBegin(@Query() paginationDto: PaginationDTO) {
     return this.doctorService.FindByWorkdayBegin(paginationDto);
   }
 
   @Get('/search/workdayEnd/')
-  @UsePipes(AntiStatementUrl, FindByWorkday)
+  @UsePipes(AntiStatementUrl, FindByHourField)
   FindByWorkdayEnd(@Query() paginationDto: PaginationDTO) {
     return this.doctorService.FindByWorkdayEnd(paginationDto);
   }

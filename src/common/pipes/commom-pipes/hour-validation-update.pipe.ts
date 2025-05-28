@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
-import { hourRegex } from '../constants/hour-regex';
+import { hourRegex } from '../../constants/hour-regex';
 
 @Injectable()
 export class ParseToHourPipeUpdate implements PipeTransform {

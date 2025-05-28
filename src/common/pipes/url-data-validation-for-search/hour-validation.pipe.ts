@@ -7,7 +7,7 @@ import {
 import { hourRegex } from 'src/common/constants/hour-regex';
 
 @Injectable()
-export class FindByWorkday implements PipeTransform {
+export class FindByHourField implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {
     const workdayBeginOrEnd = String(value.value);
 

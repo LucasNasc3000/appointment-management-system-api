@@ -255,7 +255,7 @@ export class EmployeesService {
         id: 'desc',
       },
       where: {
-        workday_begin: Like(`${value}%`),
+        workday_begin: value,
       },
     });
 
@@ -282,7 +282,7 @@ export class EmployeesService {
         id: 'desc',
       },
       where: {
-        workday_end: Like(`${value}%`),
+        workday_end: value,
       },
     });
 

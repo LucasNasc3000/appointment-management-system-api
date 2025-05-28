@@ -135,6 +135,18 @@ export class DoctorsService {
     return doctorFindByEmail;
   }
 
+  async FindByCrm(crm: string) {
+    const doctorFindByCpf = await this.doctorRepository.findOneBy({
+      crm,
+    });
+
+    if (!doctorFindByCpf) {
+      throw new NotFoundException('Médico não encontrado');
+    }
+
+    return doctorFindByCpf;
+  }
+
   async FindByName(paginationDTO: PaginationDTO) {
     const { limit, offset, value } = paginationDTO;
 
@@ -172,7 +184,7 @@ export class DoctorsService {
         id: 'desc',
       },
       where: {
-        name: Like(`${value}%`),
+        specialties: Like(`%${value}%`),
       },
     });
 
@@ -199,7 +211,7 @@ export class DoctorsService {
         id: 'desc',
       },
       where: {
-        name: Like(`${value}%`),
+        academic_degree: Like(`${value}%`),
       },
     });
 
@@ -253,7 +265,7 @@ export class DoctorsService {
         id: 'desc',
       },
       where: {
-        workday_begin: Like(`${value}%`),
+        workday_begin: value,
       },
     });
 
@@ -280,7 +292,7 @@ export class DoctorsService {
         id: 'desc',
       },
       where: {
-        workday_end: Like(`${value}%`),
+        workday_end: value,
       },
     });
 
