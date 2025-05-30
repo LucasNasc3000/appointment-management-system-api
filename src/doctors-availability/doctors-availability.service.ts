@@ -4,6 +4,7 @@ import { DoctorsService } from 'src/doctors/doctors.service';
 import { Repository } from 'typeorm';
 import { CreateDoctorsAvailabilityDTO } from './dto/create-da.dto';
 import { DoctorsAvailability } from './entities/doctors-availability.entity';
+import { GetDateObject } from './utils/get-date-object';
 
 @Injectable()
 export class DoctorsAvailabilityService {
@@ -14,17 +15,11 @@ export class DoctorsAvailabilityService {
   ) {}
 
   async Create(createDoctorsAvailabilityDTO: CreateDoctorsAvailabilityDTO) {
-    const { doctor } = createDoctorsAvailabilityDTO;
-
-    const date = new Date();
-    const stringFormatDate = date.toLocaleDateString('pt-br', {
-      dateStyle: 'short',
-      hour: '2-digit',
-      hour12: false,
-    });
+    const { doctor, date } = createDoctorsAvailabilityDTO;
+    const getDate = GetDateObject(date);
 
     const dataForCreation = {
-      date: stringFormatDate,
+      date: getDate,
       hour_from: createDoctorsAvailabilityDTO.hour_from,
       hour_to: createDoctorsAvailabilityDTO.hour_to,
       situation: createDoctorsAvailabilityDTO.situation,

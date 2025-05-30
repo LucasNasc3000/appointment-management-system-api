@@ -62,6 +62,7 @@ export class Doctor {
   @OneToMany(
     () => DoctorsAvailability,
     (doctorAvailability) => doctorAvailability.doctor,
+    { eager: true },
   )
   availability: DoctorsAvailability[];
 

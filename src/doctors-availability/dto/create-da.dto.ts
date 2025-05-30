@@ -1,14 +1,11 @@
-import { IsDate, IsNotEmpty, IsString, IsUUID, Length } from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID, Length } from 'class-validator';
 import { Doctor } from 'src/doctors/entities/doctor.entity';
 
 export class CreateDoctorsAvailabilityDTO {
   @IsNotEmpty({
     message: 'campo "data" não preenchido',
   })
-  @IsDate({
-    message: 'O campo "data" deve estar em formato de data',
-  })
-  readonly date: Date;
+  readonly date: string;
 
   @IsNotEmpty({
     message: 'campo "hora início" não preenchido',
