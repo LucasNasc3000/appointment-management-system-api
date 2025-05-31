@@ -1,4 +1,10 @@
-import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Length,
+} from 'class-validator';
 import { DoctorsAvailability } from 'src/doctors-availability/entities/doctors-availability.entity';
 
 export class CreateDoctorDTO {
@@ -123,8 +129,6 @@ export class CreateDoctorDTO {
   })
   readonly address: string;
 
-  @IsNotEmpty({
-    message: 'campo "disponibilidade" não preenchido',
-  })
+  @IsOptional()
   readonly availability: DoctorsAvailability[];
 }

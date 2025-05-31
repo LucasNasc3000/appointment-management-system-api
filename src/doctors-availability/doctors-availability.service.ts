@@ -1,8 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DoctorsService } from 'src/doctors/doctors.service';
 import { Repository } from 'typeorm';
 import { CreateDoctorsAvailabilityDTO } from './dto/create-da.dto';
+import { UpdateDoctorsAvailabilityAdminDTO } from './dto/update-da-admin.dto';
+import { UpdateDoctorsAvailabilityDTO } from './dto/update-da.dto';
 import { DoctorsAvailability } from './entities/doctors-availability.entity';
 import { GetDateObject } from './utils/get-date-object';
 
@@ -41,5 +47,78 @@ export class DoctorsAvailabilityService {
     return {
       ...newDoctorsAvailabilityData,
     };
+  }
+
+  async UpdateSelf(
+    id: string,
+    updateDoctorsAvailabilityDTO: UpdateDoctorsAvailabilityDTO,
+  ) {
+    const allowedData = {
+      date: updateDoctorsAvailabilityDTO.date,
+      hour_from: updateDoctorsAvailabilityDTO.hour_from,
+      hour_to: updateDoctorsAvailabilityDTO.hour_to,
+    };
+
+    const findDoctorById = await this.doctorsAvailabilityRepository.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!findDoctorById) {
+      throw new NotFoundException(
+        'Registro de disponibilidade do médico não encontrado',
+      );
+    }
+
+    const doctorUpdate = await this.doctorsAvailabilityRepository.preload({
+      id,
+      ...allowedData,
+    });
+
+    if (!doctorUpdate) {
+      throw new InternalServerErrorException(
+        'Erro ao tentar atualizar disponibilidade do médico',
+      );
+    }
+
+    return this.doctorsAvailabilityRepository.save(doctorUpdate);
+  }
+
+  async UpdateAdmin(
+    id: string,
+    updateDoctorsAvailabilityAdminDTO: UpdateDoctorsAvailabilityAdminDTO,
+  ) {
+    const allowedData = {
+      date: updateDoctorsAvailabilityAdminDTO.date,
+      hour_from: updateDoctorsAvailabilityAdminDTO.hour_from,
+      hour_to: updateDoctorsAvailabilityAdminDTO.hour_to,
+      situation: updateDoctorsAvailabilityAdminDTO.situation,
+    };
+
+    const findDoctorById = await this.doctorsAvailabilityRepository.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!findDoctorById) {
+      throw new NotFoundException(
+        'Registro de disponibilidade do médico não encontrado',
+      );
+    }
+
+    const doctorUpdate = await this.doctorsAvailabilityRepository.preload({
+      id,
+      ...allowedData,
+    });
+
+    if (!doctorUpdate) {
+      throw new InternalServerErrorException(
+        'Erro ao tentar atualizar dados do registro de disponibilidade do médico',
+      );
+    }
+
+    return this.doctorsAvailabilityRepository.save(doctorUpdate);
   }
 }
