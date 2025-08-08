@@ -6,11 +6,11 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { DoctorsService } from 'src/doctors/doctors.service';
 import { Repository } from 'typeorm';
+import { GetDateObject } from '../utils/get-date-object';
 import { CreateDoctorsAvailabilityDTO } from './dto/create-da.dto';
 import { UpdateDoctorsAvailabilityAdminDTO } from './dto/update-da-admin.dto';
 import { UpdateDoctorsAvailabilityDTO } from './dto/update-da.dto';
 import { DoctorsAvailability } from './entities/doctors-availability.entity';
-import { GetDateObject } from './utils/get-date-object';
 
 @Injectable()
 export class DoctorsAvailabilityService {

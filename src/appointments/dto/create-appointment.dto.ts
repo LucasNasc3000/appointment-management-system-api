@@ -1,22 +1,18 @@
-import { IsDate, IsNotEmpty, IsString, IsUUID, Length } from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID, Length } from 'class-validator';
+import { Doctor } from 'src/doctors/entities/doctor.entity';
+import { Patient } from 'src/patients/entities/patient.entity';
 
 export class CreateAppointmentDTO {
   @IsNotEmpty({
     message: 'campo "data" não preenchido',
   })
-  @IsDate({
-    message: 'O campo "data" deve estar em formato de data',
-  })
-  readonly date: Date;
+  readonly date: string;
 
   @IsNotEmpty({
     message: 'campo "hora início" não preenchido',
   })
   readonly hour: string;
 
-  @IsNotEmpty({
-    message: 'campo "hora início" não preenchido',
-  })
   @IsString({
     message: 'campo "formato" deve estar em formato de texto',
   })
@@ -27,20 +23,20 @@ export class CreateAppointmentDTO {
   // formato de text, msg isString
 
   @IsNotEmpty({
-    message: 'campo "doctor_id" não preenchido',
+    message: 'campo "doctor" não preenchido',
   })
   @IsUUID(4, {
-    message: 'campo "doctor_id" deve ser um uuid',
+    message: 'campo "doctor" deve ser um uuid',
   })
-  readonly doctor_id: string;
+  readonly doctor: Doctor;
 
   @IsNotEmpty({
-    message: 'campo "patient_id" não preenchido',
+    message: 'campo "patient" não preenchido',
   })
   @IsUUID(4, {
-    message: 'campo "patient_id" deve ser um uuid',
+    message: 'campo "patient" deve ser um uuid',
   })
-  readonly patient_id: string;
+  readonly patient: Patient;
 
   @IsNotEmpty({
     message: 'campo "status" não preenchido',

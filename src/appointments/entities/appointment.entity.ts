@@ -25,12 +25,12 @@ export class Appointment {
   format: string;
 
   @ManyToOne(() => Doctor, { onDelete: 'RESTRICT' })
-  @JoinColumn({ name: 'doctor_id' })
-  doctor_id: Doctor;
+  @JoinColumn({ name: 'doctor' })
+  doctor: Doctor;
 
   @ManyToOne(() => Patient, { onDelete: 'RESTRICT' })
-  @JoinColumn({ name: 'patient_id' })
-  patient_id: Patient;
+  @JoinColumn({ name: 'patient' })
+  patient: Patient;
 
   @Column({ type: 'varchar', length: 12 })
   status: string;
