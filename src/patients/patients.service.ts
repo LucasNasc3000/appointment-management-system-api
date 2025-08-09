@@ -59,9 +59,11 @@ export class PatientsService {
     return this.patientRepository.save(patientUpdate);
   }
 
-  async FindById(id: string) {
+  async FindById(id: string | Patient) {
+    const stringFormatId = String(id);
+
     const patientFindById = await this.patientRepository.findOneBy({
-      id,
+      id: stringFormatId,
     });
 
     if (!patientFindById) {
