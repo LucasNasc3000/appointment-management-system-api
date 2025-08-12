@@ -137,4 +137,85 @@ export class AppointmentsService {
 
     return appointmentFindByDate;
   }
+
+  async FindByHour(paginationDTO: PaginationDTO) {
+    const { limit, offset, value } = paginationDTO;
+
+    const appointmentFindByHour = await this.appointmentRepository.find({
+      take: limit,
+      skip: offset,
+      order: {
+        id: 'desc',
+      },
+      where: {
+        hour: value,
+      },
+    });
+
+    if (!appointmentFindByHour) {
+      throw new InternalServerErrorException(
+        'Erro desconhecido ao tentar pesquisar por agendamentos',
+      );
+    }
+
+    if (appointmentFindByHour.length < 1) {
+      throw new NotFoundException('agendamentos não encontrados');
+    }
+
+    return appointmentFindByHour;
+  }
+
+  async FindByFormat(paginationDTO: PaginationDTO) {
+    const { limit, offset, value } = paginationDTO;
+
+    const appointmentFindByFormat = await this.appointmentRepository.find({
+      take: limit,
+      skip: offset,
+      order: {
+        id: 'desc',
+      },
+      where: {
+        format: value,
+      },
+    });
+
+    if (!appointmentFindByFormat) {
+      throw new InternalServerErrorException(
+        'Erro desconhecido ao tentar pesquisar por agendamentos',
+      );
+    }
+
+    if (appointmentFindByFormat.length < 1) {
+      throw new NotFoundException('agendamentos não encontrados');
+    }
+
+    return appointmentFindByFormat;
+  }
+
+  async FindByStatus(paginationDTO: PaginationDTO) {
+    const { limit, offset, value } = paginationDTO;
+
+    const appointmentFindByStatus = await this.appointmentRepository.find({
+      take: limit,
+      skip: offset,
+      order: {
+        id: 'desc',
+      },
+      where: {
+        status: value,
+      },
+    });
+
+    if (!appointmentFindByStatus) {
+      throw new InternalServerErrorException(
+        'Erro desconhecido ao tentar pesquisar por agendamentos',
+      );
+    }
+
+    if (appointmentFindByStatus.length < 1) {
+      throw new NotFoundException('agendamentos não encontrados');
+    }
+
+    return appointmentFindByStatus;
+  }
 }
