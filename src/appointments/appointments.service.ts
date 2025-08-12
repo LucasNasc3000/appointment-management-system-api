@@ -218,4 +218,62 @@ export class AppointmentsService {
 
     return appointmentFindByStatus;
   }
+
+  async FindByPatient(paginationDTO: PaginationDTO) {
+    const { limit, offset, value } = paginationDTO;
+
+    const appointmentFindByPatient = await this.appointmentRepository.find({
+      take: limit,
+      skip: offset,
+      order: {
+        id: 'desc',
+      },
+      where: {
+        patient: {
+          id: value,
+        },
+      },
+    });
+
+    if (!appointmentFindByPatient) {
+      throw new InternalServerErrorException(
+        'Erro desconhecido ao tentar pesquisar por Agendamentos',
+      );
+    }
+
+    if (appointmentFindByPatient.length < 1) {
+      throw new NotFoundException('Agendamentos não encontrados');
+    }
+
+    return appointmentFindByPatient;
+  }
+
+  async FindByDoctor(paginationDTO: PaginationDTO) {
+    const { limit, offset, value } = paginationDTO;
+
+    const appointmentFindByDoctor = await this.appointmentRepository.find({
+      take: limit,
+      skip: offset,
+      order: {
+        id: 'desc',
+      },
+      where: {
+        doctor: {
+          id: value,
+        },
+      },
+    });
+
+    if (!appointmentFindByDoctor) {
+      throw new InternalServerErrorException(
+        'Erro desconhecido ao tentar pesquisar por Agendamentos',
+      );
+    }
+
+    if (appointmentFindByDoctor.length < 1) {
+      throw new NotFoundException('Agendamentos não encontrados');
+    }
+
+    return appointmentFindByDoctor;
+  }
 }
