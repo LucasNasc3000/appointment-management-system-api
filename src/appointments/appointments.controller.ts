@@ -9,6 +9,7 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { AntiStatementUrl } from 'src/common/pipes/commom-pipes/anti-statements-url.pipe';
+import { ParseToDatePipe } from 'src/common/pipes/commom-pipes/date-validation.pipe';
 import { ParseToHourPipeUpdate } from 'src/common/pipes/commom-pipes/hour-validation-update.pipe';
 import { ParseToHourPipe } from 'src/common/pipes/commom-pipes/hour-validation.pipe';
 import { UUIDValidatorForUpdates } from 'src/common/pipes/commom-pipes/uuid-validation-updates.pipe';
@@ -24,7 +25,7 @@ export class AppointmentsController {
   constructor(private readonly appointmentsService: AppointmentsService) {}
 
   @Post()
-  @UsePipes(ParseToHourPipe)
+  @UsePipes(ParseToHourPipe, ParseToDatePipe)
   Create(@Body() body: CreateAppointmentDTO) {
     return this.appointmentsService.Create(body);
   }
