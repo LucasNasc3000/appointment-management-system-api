@@ -33,17 +33,19 @@ Em desenvolvimento 🛠️
 
 The Appointment Management System is a desktop medical appointment management system designed for use by both physicians and clinic staff. It digitizes appointment management, making the process faster and more efficient, and in some areas, automated.
 
-## Features for physicians:
+## Features
+
+### Features for physicians:
 1 - Register availability dates and times<br>
 2 - Manage assigned appointments (change the "status," "date," and "time" fields)<br>
 
-## Features for employees:
+### Features for employees:
 
 1 - Schedule appointments<br>
 2 - Register physicians and manage their data<br>
 3 - Register patients and manage their data<br>
 
-## Automatic features:
+### Automatic features:
 
 1 - Check physician status (employed, dismissed)<br>
 2 - Check physician availability dates and times<br>
