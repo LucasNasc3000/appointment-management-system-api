@@ -1,6 +1,6 @@
 # Sistema de Gerenciamento de Consultas
 
-O Sistema de Gerenciamento de Consultas é um sistema para gerenciamento de consultas médicas para desktop, feito para ser usado tanto pelos médicos quanto pelos funcionários da clínica. Com ele o gerenciamento de consultas é digitalizado, tornando o processo mais rápido e eficiente e em alguns pontos, automatizado.
+O Sistema de Gerenciamento de Consultas é uma solução para clínicas, projetado para digitalizar e otimizar a gestão de consultas. Feito para o uso de médicos e funcionários, o sistema agiliza processos, reduz a carga de trabalho e aumenta a eficiência operacional.
 
 ## Funcionalidades
 
@@ -31,24 +31,24 @@ Em desenvolvimento 🛠️
 
 # Appointment Management System
 
-The Appointment Management System is a desktop medical appointment management system designed for use by both physicians and clinic staff. It digitizes appointment management, making the process faster and more efficient, and in some areas, automated.
+The Appointment Management System is a solution for clinics, designed to digitize and improve appointment management. Designed for use by doctors and staff, the system streamlines processes, reduces workload, and increases operational efficiency.
 
 ## Features
 
-### Features for physicians:
+### Features for doctors:
 1 - Register availability dates and times<br>
 2 - Manage assigned appointments (change the "status," "date," and "time" fields)<br>
 
 ### Features for employees:
 
 1 - Schedule appointments<br>
-2 - Register physicians and manage their data<br>
+2 - Register doctors and manage their data<br>
 3 - Register patients and manage their data<br>
 
 ### Automatic features:
 
-1 - Check physician status (employed, dismissed)<br>
-2 - Check physician availability dates and times<br>
+1 - Check doctors status (employed, dismissed)<br>
+2 - Check doctors availability dates and times<br>
 3 - Make system features available according to user permissions<br>
 
 ## Status
