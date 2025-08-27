@@ -99,8 +99,25 @@ export class AppointmentsService {
   }
 
   async FindById(id: string) {
-    const appointmentFindById = await this.appointmentRepository.findOneBy({
-      id,
+    const appointmentFindById = await this.appointmentRepository.find({
+      order: {
+        id: 'desc',
+      },
+      where: {
+        id,
+      },
+      relations: {
+        patient: true,
+        doctor: true,
+      },
+      select: {
+        patient: {
+          id: true,
+        },
+        doctor: {
+          id: true,
+        },
+      },
     });
 
     if (!appointmentFindById) {
@@ -152,6 +169,18 @@ export class AppointmentsService {
       where: {
         hour: value,
       },
+      relations: {
+        patient: true,
+        doctor: true,
+      },
+      select: {
+        patient: {
+          id: true,
+        },
+        doctor: {
+          id: true,
+        },
+      },
     });
 
     if (!appointmentFindByHour) {
@@ -179,6 +208,18 @@ export class AppointmentsService {
       where: {
         format: value,
       },
+      relations: {
+        patient: true,
+        doctor: true,
+      },
+      select: {
+        patient: {
+          id: true,
+        },
+        doctor: {
+          id: true,
+        },
+      },
     });
 
     if (!appointmentFindByFormat) {
@@ -205,6 +246,18 @@ export class AppointmentsService {
       },
       where: {
         status: value,
+      },
+      relations: {
+        patient: true,
+        doctor: true,
+      },
+      select: {
+        patient: {
+          id: true,
+        },
+        doctor: {
+          id: true,
+        },
       },
     });
 
@@ -235,6 +288,18 @@ export class AppointmentsService {
           id: value,
         },
       },
+      relations: {
+        patient: true,
+        doctor: true,
+      },
+      select: {
+        patient: {
+          id: true,
+        },
+        doctor: {
+          id: true,
+        },
+      },
     });
 
     if (!appointmentFindByPatient) {
@@ -262,6 +327,18 @@ export class AppointmentsService {
       where: {
         doctor: {
           id: value,
+        },
+      },
+      relations: {
+        patient: true,
+        doctor: true,
+      },
+      select: {
+        patient: {
+          id: true,
+        },
+        doctor: {
+          id: true,
         },
       },
     });

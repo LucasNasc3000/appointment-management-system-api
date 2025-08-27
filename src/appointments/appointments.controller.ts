@@ -16,6 +16,7 @@ import { ParseToHourPipe } from 'src/common/pipes/commom-pipes/hour-validation.p
 import { UUIDValidatorForUpdates } from 'src/common/pipes/commom-pipes/uuid-validation-updates.pipe';
 import { FindByDateField } from 'src/common/pipes/url-data-validation-for-search/date-validation.pipe';
 import { FindByHourField } from 'src/common/pipes/url-data-validation-for-search/hour-validation.pipe';
+import { FindByIdValidationQuery } from 'src/common/pipes/url-data-validation-for-search/id-validation-query.pipe';
 import { FindByIdValidation } from 'src/common/pipes/url-data-validation-for-search/id-validation.pipe';
 import { AppointmentsService } from './appointments.service';
 import { CreateAppointmentDTO } from './dto/create-appointment.dto';
@@ -77,13 +78,13 @@ export class AppointmentsController {
   }
 
   @Get('/search/patient/')
-  @UsePipes(AntiStatementUrl, FindByIdValidation)
+  @UsePipes(AntiStatementUrl, FindByIdValidationQuery)
   FindByPatient(@Query() paginationDTO: PaginationDTO) {
     return this.appointmentsService.FindByPatient(paginationDTO);
   }
 
   @Get('/search/doctor/')
-  @UsePipes(AntiStatementUrl, FindByIdValidation)
+  @UsePipes(AntiStatementUrl, FindByIdValidationQuery)
   FindByDoctor(@Query() paginationDTO: PaginationDTO) {
     return this.appointmentsService.FindByDoctor(paginationDTO);
   }
