@@ -8,6 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DoctorsService } from 'src/doctors/doctors.service';
 import { PatientsService } from 'src/patients/patients.service';
 import { GetDateObject } from 'src/utils/get-date-object';
+import { GetDateObjectDateSearch } from 'src/utils/get-date-object-date-search';
 import { Repository } from 'typeorm';
 import { CreateAppointmentDTO } from './dto/create-appointment.dto';
 import { PaginationDTO } from './dto/pagination-appointment.dto';
@@ -112,18 +113,19 @@ export class AppointmentsService {
   async FindByDate(paginationDTO: PaginationDTO) {
     const { limit, offset, value } = paginationDTO;
 
-    const stringToDate = GetDateObject(value);
+    const stringToDate = GetDateObjectDateSearch(value);
+    const initialDate = stringToDate[0];
+    const finalDate = stringToDate[1];
 
-    const appointmentFindByDate = await this.appointmentRepository.find({
-      take: limit,
-      skip: offset,
-      order: {
-        id: 'desc',
-      },
-      where: {
-        date: stringToDate,
-      },
-    });
+    const appointmentFindByDate = await this.appointmentRepository
+      .createQueryBuilder('appointments')
+      .where('appointments.date BETWEEN :initialDate AND :finalDate', {
+        initialDate,
+        finalDate,
+      })
+      .take(limit)
+      .skip(offset)
+      .getMany();
 
     if (!appointmentFindByDate) {
       throw new InternalServerErrorException(
