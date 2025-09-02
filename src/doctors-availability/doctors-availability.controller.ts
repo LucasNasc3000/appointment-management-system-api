@@ -1,11 +1,22 @@
-import { Body, Controller, Param, Patch, Post, UsePipes } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UsePipes,
+} from '@nestjs/common';
 import { AntiStatementUrl } from 'src/common/pipes/commom-pipes/anti-statements-url.pipe';
 import { ParseToHourPipeUpdate } from 'src/common/pipes/commom-pipes/hour-validation-update.pipe';
 import { ParseToHourPipe } from 'src/common/pipes/commom-pipes/hour-validation.pipe';
 import { UUIDValidatorForUpdates } from 'src/common/pipes/commom-pipes/uuid-validation-updates.pipe';
 import { DoctorsAvailabilityUpdateSelfRestrictions } from 'src/common/pipes/update-restrictions/doctors-availability/update-self.pipe';
+import { FindByDateField } from 'src/common/pipes/url-data-validation-for-search/date-validation.pipe';
 import { DoctorsAvailabilityService } from './doctors-availability.service';
 import { CreateDoctorsAvailabilityDTO } from './dto/create-da.dto';
+import { PaginationDTO } from './dto/pagination-da.dto';
 import { UpdateDoctorsAvailabilityAdminDTO } from './dto/update-da-admin.dto';
 import { UpdateDoctorsAvailabilityDTO } from './dto/update-da.dto';
 
@@ -49,5 +60,11 @@ export class DoctorsAvailabilityController {
       id,
       updateDoctorsAvailabilityAdminDTO,
     );
+  }
+
+  @Get('/search/date/')
+  @UsePipes(AntiStatementUrl, FindByDateField)
+  FindByDate(@Query() paginationDTO: PaginationDTO) {
+    return this.doctorsAvailabilityService.FindByDate(paginationDTO);
   }
 }

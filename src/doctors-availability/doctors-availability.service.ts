@@ -5,9 +5,11 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DoctorsService } from 'src/doctors/doctors.service';
+import { GetDateObjectDateSearch } from 'src/utils/get-date-object-date-search';
 import { Repository } from 'typeorm';
 import { GetDateObject } from '../utils/get-date-object';
 import { CreateDoctorsAvailabilityDTO } from './dto/create-da.dto';
+import { PaginationDTO } from './dto/pagination-da.dto';
 import { UpdateDoctorsAvailabilityAdminDTO } from './dto/update-da-admin.dto';
 import { UpdateDoctorsAvailabilityDTO } from './dto/update-da.dto';
 import { DoctorsAvailability } from './entities/doctors-availability.entity';
@@ -120,5 +122,40 @@ export class DoctorsAvailabilityService {
     }
 
     return this.doctorsAvailabilityRepository.save(doctorUpdate);
+  }
+
+  async FindByDate(paginationDTO: PaginationDTO) {
+    const { limit, offset, value } = paginationDTO;
+
+    const stringToDate = GetDateObjectDateSearch(value);
+    const initialDate = stringToDate[0];
+    const finalDate = stringToDate[1];
+
+    const doctorsAvailabilityFindByDate =
+      await this.doctorsAvailabilityRepository
+        .createQueryBuilder('doctorsAvailability')
+        .where('doctorsAvailability.date BETWEEN :initialDate AND :finalDate', {
+          initialDate,
+          finalDate,
+        })
+        .take(limit)
+        .skip(offset)
+        .leftJoinAndSelect('doctorsAvailability.doctor', 'doctor')
+        // .select(['doctor.id', 'doctor.situation'])
+        .getMany();
+
+    if (!doctorsAvailabilityFindByDate) {
+      throw new InternalServerErrorException(
+        'Erro desconhecido ao tentar pesquisar por registros de disponibilidade do médico',
+      );
+    }
+
+    if (doctorsAvailabilityFindByDate.length < 1) {
+      throw new NotFoundException(
+        'Registros de disponibilidade do médico não encontrados',
+      );
+    }
+
+    return doctorsAvailabilityFindByDate;
   }
 }
