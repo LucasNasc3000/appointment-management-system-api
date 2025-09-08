@@ -140,6 +140,17 @@ export class AppointmentsService {
         initialDate,
         finalDate,
       })
+      .leftJoin('appointments.doctor', 'doctor')
+      .leftJoin('appointments.patient', 'patient')
+      .select([
+        'appointments',
+        'doctor.id',
+        'doctor.situation',
+        'doctor.name',
+        'doctor.specialties',
+        'patient.id',
+        'patient.name',
+      ])
       .take(limit)
       .skip(offset)
       .getMany();
