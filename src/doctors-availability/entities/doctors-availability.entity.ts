@@ -23,9 +23,6 @@ export class DoctorsAvailability {
   @Column({ type: 'time' })
   hour_to: string;
 
-  @Column({ type: 'varchar', length: 9 })
-  situation: string;
-
   @ManyToOne(() => Doctor, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'doctor' })
   doctor: Doctor;

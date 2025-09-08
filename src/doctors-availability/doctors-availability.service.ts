@@ -10,7 +10,6 @@ import { Repository } from 'typeorm';
 import { GetDateObject } from '../utils/get-date-object';
 import { CreateDoctorsAvailabilityDTO } from './dto/create-da.dto';
 import { PaginationDTO } from './dto/pagination-da.dto';
-import { UpdateDoctorsAvailabilityAdminDTO } from './dto/update-da-admin.dto';
 import { UpdateDoctorsAvailabilityDTO } from './dto/update-da.dto';
 import { DoctorsAvailability } from './entities/doctors-availability.entity';
 
@@ -51,7 +50,7 @@ export class DoctorsAvailabilityService {
     };
   }
 
-  async UpdateSelf(
+  async Update(
     id: string,
     updateDoctorsAvailabilityDTO: UpdateDoctorsAvailabilityDTO,
   ) {
@@ -87,43 +86,6 @@ export class DoctorsAvailabilityService {
     return this.doctorsAvailabilityRepository.save(doctorUpdate);
   }
 
-  async UpdateAdmin(
-    id: string,
-    updateDoctorsAvailabilityAdminDTO: UpdateDoctorsAvailabilityAdminDTO,
-  ) {
-    const allowedData = {
-      date: updateDoctorsAvailabilityAdminDTO.date,
-      hour_from: updateDoctorsAvailabilityAdminDTO.hour_from,
-      hour_to: updateDoctorsAvailabilityAdminDTO.hour_to,
-      situation: updateDoctorsAvailabilityAdminDTO.situation,
-    };
-
-    const findDoctorById = await this.doctorsAvailabilityRepository.findOne({
-      where: {
-        id,
-      },
-    });
-
-    if (!findDoctorById) {
-      throw new NotFoundException(
-        'Registro de disponibilidade do médico não encontrado',
-      );
-    }
-
-    const doctorUpdate = await this.doctorsAvailabilityRepository.preload({
-      id,
-      ...allowedData,
-    });
-
-    if (!doctorUpdate) {
-      throw new InternalServerErrorException(
-        'Erro ao tentar atualizar dados do registro de disponibilidade do médico',
-      );
-    }
-
-    return this.doctorsAvailabilityRepository.save(doctorUpdate);
-  }
-
   async FindByDate(paginationDTO: PaginationDTO) {
     const { limit, offset, value } = paginationDTO;
 
@@ -140,8 +102,13 @@ export class DoctorsAvailabilityService {
         })
         .take(limit)
         .skip(offset)
-        .leftJoinAndSelect('doctorsAvailability.doctor', 'doctor')
-        // .select(['doctor.id', 'doctor.situation'])
+        .leftJoin('doctorsAvailability.doctor', 'doctor')
+        .select([
+          'doctorsAvailability',
+          'doctor.id',
+          'doctor.name',
+          'doctor.situation',
+        ])
         .getMany();
 
     if (!doctorsAvailabilityFindByDate) {
@@ -157,5 +124,127 @@ export class DoctorsAvailabilityService {
     }
 
     return doctorsAvailabilityFindByDate;
+  }
+
+  async FindByHourFrom(paginationDTO: PaginationDTO) {
+    const { limit, offset, value } = paginationDTO;
+
+    const doctorsAvailabilityFindByHourFrom =
+      await this.doctorsAvailabilityRepository.find({
+        take: limit,
+        skip: offset,
+        order: {
+          id: 'desc',
+        },
+        where: {
+          hour_from: value,
+        },
+        relations: {
+          doctor: true,
+        },
+        select: {
+          doctor: {
+            id: true,
+            name: true,
+            situation: true,
+          },
+        },
+      });
+
+    if (!doctorsAvailabilityFindByHourFrom) {
+      throw new InternalServerErrorException(
+        'Erro desconhecido ao tentar pesquisar por disponibilidade do médico',
+      );
+    }
+
+    if (doctorsAvailabilityFindByHourFrom.length < 1) {
+      throw new NotFoundException(
+        'Registros de disponibilidade do médico não encontrados',
+      );
+    }
+
+    return doctorsAvailabilityFindByHourFrom;
+  }
+
+  async FindByHourTo(paginationDTO: PaginationDTO) {
+    const { limit, offset, value } = paginationDTO;
+
+    const doctorsAvailabilityFindByHourTo =
+      await this.doctorsAvailabilityRepository.find({
+        take: limit,
+        skip: offset,
+        order: {
+          id: 'desc',
+        },
+        where: {
+          hour_to: value,
+        },
+        relations: {
+          doctor: true,
+        },
+        select: {
+          doctor: {
+            id: true,
+            name: true,
+            situation: true,
+          },
+        },
+      });
+
+    if (!doctorsAvailabilityFindByHourTo) {
+      throw new InternalServerErrorException(
+        'Erro desconhecido ao tentar pesquisar por disponibilidade do médico',
+      );
+    }
+
+    if (doctorsAvailabilityFindByHourTo.length < 1) {
+      throw new NotFoundException(
+        'Registros de disponibilidade do médico não encontrados',
+      );
+    }
+
+    return doctorsAvailabilityFindByHourTo;
+  }
+
+  async FindByDoctor(paginationDTO: PaginationDTO) {
+    const { limit, offset, value } = paginationDTO;
+
+    const appointmentFindByDoctor =
+      await this.doctorsAvailabilityRepository.find({
+        take: limit,
+        skip: offset,
+        order: {
+          id: 'desc',
+        },
+        where: {
+          doctor: {
+            id: value,
+          },
+        },
+        relations: {
+          doctor: true,
+        },
+        select: {
+          doctor: {
+            id: true,
+            name: true,
+            situation: true,
+          },
+        },
+      });
+
+    if (!appointmentFindByDoctor) {
+      throw new InternalServerErrorException(
+        'Erro desconhecido ao tentar pesquisar por disponibilidade do médico',
+      );
+    }
+
+    if (appointmentFindByDoctor.length < 1) {
+      throw new NotFoundException(
+        'Registros de disponibilidade do médico não encontrados',
+      );
+    }
+
+    return appointmentFindByDoctor;
   }
 }
