@@ -11,6 +11,7 @@ import {
 import { AntiStatementUrl } from 'src/common/pipes/commom-pipes/anti-statements-url.pipe';
 import { ParseToHourPipeUpdate } from 'src/common/pipes/commom-pipes/hour-validation-update.pipe';
 import { ParseToHourPipe } from 'src/common/pipes/commom-pipes/hour-validation.pipe';
+import { SituationValidation } from 'src/common/pipes/commom-pipes/situation-validation.pipe';
 import { UUIDValidatorForUpdates } from 'src/common/pipes/commom-pipes/uuid-validation-updates.pipe';
 import { EmployeeUpdateAdminRestrictions } from 'src/common/pipes/update-restrictions/employee/update-admin.pipe';
 import { EmployeeUpdateSelfRestrictions } from 'src/common/pipes/update-restrictions/employee/update-self.pipe';
@@ -45,6 +46,7 @@ export class EmployeesController {
     AntiStatementUrl,
     UUIDValidatorForUpdates,
     ParseToHourPipeUpdate,
+    SituationValidation,
     EmployeeUpdateSelfRestrictions,
   )
   UpdateSelf(
@@ -59,6 +61,7 @@ export class EmployeesController {
     AntiStatementUrl,
     UUIDValidatorForUpdates,
     ParseToHourPipeUpdate,
+    SituationValidation,
     EmployeeUpdateAdminRestrictions,
   )
   UpdateAdmin(

@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DoctorsService } from 'src/doctors/doctors.service';
+import { Doctor } from 'src/doctors/entities/doctor.entity';
 import { PatientsService } from 'src/patients/patients.service';
 import { GetDateObject } from 'src/utils/get-date-object';
 import { GetDateObjectDateSearch } from 'src/utils/get-date-object-date-search';
@@ -24,6 +25,18 @@ export class AppointmentsService {
     private readonly patientsService: PatientsService,
   ) {}
 
+  async DoctorVerify(doctorId: Doctor) {
+    const findDoctor = await this.doctorsService.FindById(doctorId);
+
+    if (!findDoctor) {
+      throw new NotFoundException('Médico não encontrado');
+    }
+
+    if (findDoctor.situation !== 'empregado') {
+      throw new ForbiddenException('O médico não está empregado no momento');
+    }
+  }
+
   // A regra é: se o médico tem o dia disponível e for a data que o paciente quer, então esta será a data, por isso o funcionário poderá mudar
   // o campo "status" e somente na criação que ele vai poder ter acesso ao campo, mas não poderá atualizar nem deletar ele depois
   async Create(createAppointmentDTO: CreateAppointmentDTO) {
@@ -39,15 +52,7 @@ export class AppointmentsService {
       status: createAppointmentDTO.status,
     };
 
-    const findDoctor = await this.doctorsService.FindById(doctor);
-
-    if (!findDoctor) {
-      throw new NotFoundException('Médico não encontrado');
-    }
-
-    if (findDoctor.situation !== 'empregado') {
-      throw new ForbiddenException('O médico não está empregado no momento');
-    }
+    this.DoctorVerify(doctor);
 
     const findPatient = await this.patientsService.FindById(patient);
 
@@ -83,6 +88,8 @@ export class AppointmentsService {
     if (!findAppointmentById) {
       throw new NotFoundException('Agendamento não encontrado');
     }
+
+    this.DoctorVerify(findAppointmentById.doctor);
 
     const appointmentUpdate = await this.appointmentRepository.preload({
       id,
