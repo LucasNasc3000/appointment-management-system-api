@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppointmentsModule } from 'src/appointments/appointments.module';
+import { AuthModule } from 'src/auth/auth.module';
 import { DoctorsAvailabilityModule } from 'src/doctors-availability/doctors-availability.module';
 import { DoctorsModule } from 'src/doctors/doctors.module';
 import { EmployeesModule } from 'src/employees/employees.module';
@@ -35,6 +36,7 @@ import { AppService } from './app.service';
     DoctorsAvailabilityModule,
     DoctorsModule,
     AppointmentsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
