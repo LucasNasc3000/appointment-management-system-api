@@ -4,6 +4,7 @@ import { HashingServiceProtocol } from './hashing/hashing.service';
 
 @Global()
 @Module({
+  controllers: [AbortController],
   providers: [
     {
       provide: HashingServiceProtocol,
