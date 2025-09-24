@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { HashingServiceProtocol } from 'src/auth/hashing/hashing.service';
 import { Like, Repository } from 'typeorm';
 import { CreateEmployeeDTO } from './dto/create-employee.dto';
 import { PaginationDTO } from './dto/pagination-employee.dto';
@@ -16,13 +17,32 @@ export class EmployeesService {
   constructor(
     @InjectRepository(Employee)
     private readonly employeeRepository: Repository<Employee>,
+    private readonly hashingService: HashingServiceProtocol,
   ) {}
 
   async Create(createEmployeeDTO: CreateEmployeeDTO) {
-    // Tirar o hash da senha do retorno posteriormente
-    const employeeCreate = this.employeeRepository.create(createEmployeeDTO);
+    const password_hash = await this.hashingService.Hash(
+      createEmployeeDTO.password_hash,
+    );
+
+    const employeeCreateData = {
+      cpf: createEmployeeDTO.cpf,
+      email: createEmployeeDTO.email,
+      name: createEmployeeDTO.name,
+      password_hash,
+      role: createEmployeeDTO.role,
+      situation: createEmployeeDTO.situation,
+      workday_begin: createEmployeeDTO.workday_begin,
+      workday_end: createEmployeeDTO.workday_end,
+      phone_number: createEmployeeDTO.phone_number,
+      address: createEmployeeDTO.address,
+    };
+
+    const employeeCreate = this.employeeRepository.create(employeeCreateData);
 
     this.employeeRepository.save(employeeCreate);
+
+    // Tirar o return na hora de finalizar o projeto
 
     return {
       ...employeeCreate,
@@ -38,6 +58,14 @@ export class EmployeesService {
       phone_number: updateEmployeeDTO.phone_number,
       address: updateEmployeeDTO.address,
     };
+
+    if (updateEmployeeDTO?.password_hash) {
+      const passwordHash = await this.hashingService.Hash(
+        updateEmployeeDTO.password_hash,
+      );
+
+      allowedData.password_hash = passwordHash;
+    }
 
     const findEmployeeById = await this.employeeRepository.findOne({
       where: {

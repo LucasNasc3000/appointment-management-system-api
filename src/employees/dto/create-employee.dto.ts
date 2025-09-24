@@ -44,7 +44,7 @@ export class CreateEmployeeDTO {
   @IsNotEmpty()
   @IsString()
   @IsStrongPassword({
-    minLength: 12,
+    minLength: 8,
     minLowercase: 2,
     minNumbers: 2,
     minSymbols: 2,
