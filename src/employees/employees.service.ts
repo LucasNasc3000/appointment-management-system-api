@@ -40,12 +40,12 @@ export class EmployeesService {
 
     const employeeCreate = this.employeeRepository.create(employeeCreateData);
 
-    this.employeeRepository.save(employeeCreate);
+    const newEmployee = this.employeeRepository.save(employeeCreate);
 
     // Tirar o return na hora de finalizar o projeto
 
     return {
-      ...employeeCreate,
+      ...newEmployee,
     };
   }
 

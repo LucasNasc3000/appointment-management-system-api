@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { HashingServiceProtocol } from 'src/auth/hashing/hashing.service';
 import { Like, Repository } from 'typeorm';
 import { CreateDoctorDTO } from './dto/create-doctor.dto';
 import { PaginationDTO } from './dto/pagination-doctor.dto';
@@ -16,15 +17,35 @@ export class DoctorsService {
   constructor(
     @InjectRepository(Doctor)
     private readonly doctorRepository: Repository<Doctor>,
+    private readonly hashingService: HashingServiceProtocol,
   ) {}
 
   async Create(createDoctorDTO: CreateDoctorDTO) {
-    const doctorCreate = this.doctorRepository.create(createDoctorDTO);
+    const password_hash = await this.hashingService.Hash(
+      createDoctorDTO.password_hash,
+    );
 
-    const newDoctorData = await this.doctorRepository.save(doctorCreate);
+    const createDoctorData = {
+      cpf: createDoctorDTO.cpf,
+      email: createDoctorDTO.email,
+      name: createDoctorDTO.name,
+      password_hash,
+      specialties: createDoctorDTO.specialties,
+      crm: createDoctorDTO.crm,
+      academic_degree: createDoctorDTO.academic_degree,
+      situation: createDoctorDTO.situation,
+      workday_begin: createDoctorDTO.workday_begin,
+      workday_end: createDoctorDTO.workday_end,
+      phone_number: createDoctorDTO.phone_number,
+      address: createDoctorDTO.address,
+    };
+
+    const doctorCreate = this.doctorRepository.create(createDoctorData);
+
+    const newDoctor = await this.doctorRepository.save(doctorCreate);
 
     return {
-      ...newDoctorData,
+      ...newDoctor,
     };
   }
 
@@ -36,6 +57,14 @@ export class DoctorsService {
       phone_number: updateDoctorDTO.phone_number,
       address: updateDoctorDTO.address,
     };
+
+    if (updateDoctorDTO?.password_hash) {
+      const passwordHash = await this.hashingService.Hash(
+        updateDoctorDTO.password_hash,
+      );
+
+      allowedData.password_hash = passwordHash;
+    }
 
     const findDoctorById = await this.doctorRepository.findOne({
       where: {
