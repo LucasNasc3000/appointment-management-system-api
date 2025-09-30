@@ -1,5 +1,6 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Doctor } from 'src/doctors/entities/doctor.entity';
 import { Employee } from 'src/employees/entities/employee.entity';
@@ -20,6 +21,7 @@ export class AuthService {
     @Inject(jwtConfig.KEY)
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
     private readonly hashingService: HashingServiceProtocol,
+    private readonly jwtService: JwtService,
   ) {}
 
   async Login(loginDTO: LoginDTO) {
@@ -49,8 +51,21 @@ export class AuthService {
       throw new UnauthorizedException('Email ou senha inválidos');
     }
 
+    const accessToken = await this.jwtService.signAsync(
+      {
+        sub: employeeOrDoctorData.id,
+        email: employeeOrDoctorData.email,
+      },
+      {
+        audience: this.jwtConfiguration.audience,
+        issuer: this.jwtConfiguration.issuer,
+        secret: this.jwtConfiguration.secret,
+        expiresIn: this.jwtConfiguration.jwtTtl,
+      },
+    );
+
     return {
-      message: 'Usuário logado',
+      accessToken,
     };
   }
 }

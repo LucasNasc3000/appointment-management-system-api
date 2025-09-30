@@ -1,5 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Doctor } from 'src/doctors/entities/doctor.entity';
 import { Employee } from 'src/employees/entities/employee.entity';
@@ -15,6 +16,7 @@ import { HashingServiceProtocol } from './hashing/hashing.service';
     TypeOrmModule.forFeature([Employee]),
     TypeOrmModule.forFeature([Doctor]),
     ConfigModule.forFeature(jwtConfig),
+    JwtModule.registerAsync(jwtConfig.asProvider()),
   ],
   controllers: [AuthController],
   providers: [
