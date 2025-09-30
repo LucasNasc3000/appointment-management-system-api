@@ -1,8 +1,10 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Doctor } from 'src/doctors/entities/doctor.entity';
 import { Employee } from 'src/employees/entities/employee.entity';
 import { Repository } from 'typeorm';
+import jwtConfig from './config/jwt.config';
 import { LoginDTO } from './dto/login.dto';
 import { HashingServiceProtocol } from './hashing/hashing.service';
 
@@ -14,6 +16,9 @@ export class AuthService {
 
     @InjectRepository(Doctor)
     private readonly doctorRepository: Repository<Doctor>,
+
+    @Inject(jwtConfig.KEY)
+    private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
     private readonly hashingService: HashingServiceProtocol,
   ) {}
 
