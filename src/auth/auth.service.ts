@@ -40,7 +40,7 @@ export class AuthService {
     if (findEmployee) employeeOrDoctorData = { ...findEmployee };
     if (findDoctor) employeeOrDoctorData = { ...findDoctor };
 
-    const passwordCompare = this.hashingService.Compare(
+    const passwordCompare = await this.hashingService.Compare(
       loginDTO.password,
       employeeOrDoctorData.password_hash,
     );
