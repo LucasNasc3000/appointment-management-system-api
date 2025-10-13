@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TokenPayloadDTO } from 'src/auth/dto/token-payload.dto';
 import { HashingServiceProtocol } from 'src/auth/hashing/hashing.service';
 import { Like, Repository } from 'typeorm';
 import { CreateEmployeeDTO } from './dto/create-employee.dto';
@@ -50,7 +51,11 @@ export class EmployeesService {
   }
 
   // Verificar se é um funcionário ou admin no guard ou middleware
-  async UpdateSelf(id: string, updateEmployeeDTO: UpdateEmployeeDTO) {
+  async UpdateSelf(
+    id: string,
+    updateEmployeeDTO: UpdateEmployeeDTO,
+    tokenPayload: TokenPayloadDTO,
+  ) {
     const allowedData = {
       email: updateEmployeeDTO.email,
       name: updateEmployeeDTO.name,

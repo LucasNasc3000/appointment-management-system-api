@@ -8,6 +8,7 @@ import {
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import { REQUEST_TOKEN_PAYLOAD_KEY } from '../auth.constants';
 import jwtConfig from '../config/jwt.config';
 
 @Injectable()
@@ -33,7 +34,8 @@ export class AuthTokenGuard implements CanActivate {
         this.jwtConfiguration,
       );
 
-      return true;
+      // Retorna os dados que geraram o jwt
+      return (request[REQUEST_TOKEN_PAYLOAD_KEY] = payload);
     } catch (error) {
       throw new UnauthorizedException(error.message);
     }

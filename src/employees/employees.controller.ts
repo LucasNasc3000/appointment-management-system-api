@@ -9,7 +9,9 @@ import {
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
+import { TokenPayloadDTO } from 'src/auth/dto/token-payload.dto';
 import { AuthTokenGuard } from 'src/auth/guards/auth-token.guard';
+import { TokenPayloadParam } from 'src/auth/params/token-payload.param';
 import { AntiStatementUrl } from 'src/common/pipes/commom-pipes/anti-statements-url.pipe';
 import { ParseToHourPipeUpdate } from 'src/common/pipes/commom-pipes/hour-validation-update.pipe';
 import { ParseToHourPipe } from 'src/common/pipes/commom-pipes/hour-validation.pipe';
@@ -55,8 +57,9 @@ export class EmployeesController {
   UpdateSelf(
     @Param('id') id: string,
     @Body() updateEmployeeDTO: UpdateEmployeeDTO,
+    @TokenPayloadParam() tokenPayload: TokenPayloadDTO,
   ) {
-    return this.employeeService.UpdateSelf(id, updateEmployeeDTO);
+    return this.employeeService.UpdateSelf(id, updateEmployeeDTO, tokenPayload);
   }
 
   @Patch('/update/admin/:id')
