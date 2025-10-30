@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigType } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppointmentsModule } from 'src/appointments/appointments.module';
 import { AuthModule } from 'src/auth/auth.module';
+import { AuthTokenGuard } from 'src/auth/guards/auth-token.guard';
 import { DoctorsAvailabilityModule } from 'src/doctors-availability/doctors-availability.module';
 import { DoctorsModule } from 'src/doctors/doctors.module';
 import { EmployeesModule } from 'src/employees/employees.module';
@@ -39,6 +41,12 @@ import { AppService } from './app.service';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthTokenGuard,
+    },
+  ],
 })
 export class AppModule {}

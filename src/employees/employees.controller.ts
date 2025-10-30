@@ -6,11 +6,9 @@ import {
   Patch,
   Post,
   Query,
-  UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { TokenPayloadDTO } from 'src/auth/dto/token-payload.dto';
-import { AuthTokenGuard } from 'src/auth/guards/auth-token.guard';
 import { TokenPayloadParam } from 'src/auth/params/token-payload.param';
 import { AntiStatementUrl } from 'src/common/pipes/commom-pipes/anti-statements-url.pipe';
 import { ParseToHourPipeUpdate } from 'src/common/pipes/commom-pipes/hour-validation-update.pipe';
@@ -35,7 +33,6 @@ import { UpdateEmployeeDTO } from './dto/update-employee.dto';
 import { EmployeesService } from './employees.service';
 
 // Criar validações para updates e creates não aceitarem urls com valores
-@UseGuards(AuthTokenGuard)
 @Controller('employees')
 export class EmployeesController {
   constructor(private readonly employeeService: EmployeesService) {}

@@ -18,8 +18,6 @@ export class DoctorUpdateSelfRestrictions implements PipeTransform {
       'workday_end',
     ];
 
-    console.log(value);
-
     if (typeof value === 'object' && Object.keys(value).length < 1) {
       throw new BadRequestException('Nenhum dado enviado para atualização');
     }
