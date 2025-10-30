@@ -18,15 +18,19 @@ export class DoctorUpdateSelfRestrictions implements PipeTransform {
       'workday_end',
     ];
 
+    console.log(value);
+
     if (typeof value === 'object' && Object.keys(value).length < 1) {
       throw new BadRequestException('Nenhum dado enviado para atualização');
     }
 
-    forbiddenKeys.forEach((element) => {
-      if (Object.keys(value).includes(element)) {
-        throw new ForbiddenException('Ação não autorizada');
-      }
-    });
+    if (typeof value === 'object') {
+      forbiddenKeys.forEach((element) => {
+        if (Object.keys(value).includes(element)) {
+          throw new ForbiddenException('Ação não autorizada');
+        }
+      });
+    }
 
     return value;
   }

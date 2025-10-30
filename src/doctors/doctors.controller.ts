@@ -6,8 +6,12 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
   UsePipes,
 } from '@nestjs/common';
+import { TokenPayloadDTO } from 'src/auth/dto/token-payload.dto';
+import { AuthTokenGuard } from 'src/auth/guards/auth-token.guard';
+import { TokenPayloadParam } from 'src/auth/params/token-payload.param';
 import { AntiStatementUrl } from 'src/common/pipes/commom-pipes/anti-statements-url.pipe';
 import { ParseToHourPipeUpdate } from 'src/common/pipes/commom-pipes/hour-validation-update.pipe';
 import { ParseToHourPipe } from 'src/common/pipes/commom-pipes/hour-validation.pipe';
@@ -39,6 +43,7 @@ export class DoctorsController {
     return this.doctorService.Create(body);
   }
 
+  @UseGuards(AuthTokenGuard)
   @Patch('/update/self/:id')
   @UsePipes(
     AntiStatementUrl,
@@ -49,8 +54,9 @@ export class DoctorsController {
   UpdateSelf(
     @Param('id') id: string,
     @Body() updateDoctorDTO: UpdateDoctorDTO,
+    @TokenPayloadParam() tokenPayload: TokenPayloadDTO,
   ) {
-    return this.doctorService.UpdateSelf(id, updateDoctorDTO);
+    return this.doctorService.UpdateSelf(id, updateDoctorDTO, tokenPayload);
   }
 
   @Patch('/update/admin/:id')

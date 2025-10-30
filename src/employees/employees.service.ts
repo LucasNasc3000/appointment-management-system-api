@@ -1,4 +1,5 @@
 import {
+  ForbiddenException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -63,6 +64,10 @@ export class EmployeesService {
       phone_number: updateEmployeeDTO.phone_number,
       address: updateEmployeeDTO.address,
     };
+
+    if (id !== tokenPayload.sub) {
+      throw new ForbiddenException('Ação não permitida');
+    }
 
     if (updateEmployeeDTO?.password_hash) {
       const passwordHash = await this.hashingService.Hash(

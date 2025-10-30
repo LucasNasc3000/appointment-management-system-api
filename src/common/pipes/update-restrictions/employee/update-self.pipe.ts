@@ -20,11 +20,13 @@ export class EmployeeUpdateSelfRestrictions implements PipeTransform {
       throw new BadRequestException('Nenhum dado enviado para atualização');
     }
 
-    forbiddenKeys.forEach((element) => {
-      if (Object.keys(value).includes(element)) {
-        throw new ForbiddenException('Ação não autorizada');
-      }
-    });
+    if (typeof value === 'object') {
+      forbiddenKeys.forEach((element) => {
+        if (Object.keys(value).includes(element)) {
+          throw new ForbiddenException('Ação não autorizada');
+        }
+      });
+    }
 
     return value;
   }

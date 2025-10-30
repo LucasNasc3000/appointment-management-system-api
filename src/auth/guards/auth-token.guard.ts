@@ -34,8 +34,9 @@ export class AuthTokenGuard implements CanActivate {
         this.jwtConfiguration,
       );
 
-      // Retorna os dados que geraram o jwt
-      return (request[REQUEST_TOKEN_PAYLOAD_KEY] = payload);
+      request[REQUEST_TOKEN_PAYLOAD_KEY] = payload;
+
+      return true;
     } catch (error) {
       throw new UnauthorizedException(error.message);
     }
