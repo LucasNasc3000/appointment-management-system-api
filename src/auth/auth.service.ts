@@ -52,6 +52,10 @@ export class AuthService {
       throw new UnauthorizedException('Email ou senha inválidos');
     }
 
+    return this.CreateTokens(employeeOrDoctorData);
+  }
+
+  async CreateTokens(employeeOrDoctorData: Employee | Doctor) {
     const accessToken = await this.SignJwtAsync<Partial<Employee | Doctor>>(
       employeeOrDoctorData.id,
       this.jwtConfiguration.jwtTtl,
@@ -84,5 +88,34 @@ export class AuthService {
     );
   }
 
-  async RefreshTokens(refreshTokenDto: RefreshTokenDTO) {}
+  async RefreshTokens(refreshTokenDto: RefreshTokenDTO) {
+    try {
+      let employeeOrDoctorData: Doctor | Employee;
+
+      const { sub } = await this.jwtService.verifyAsync(
+        refreshTokenDto.refreshToken,
+        this.jwtConfiguration,
+      );
+
+      const findEmployee = await this.employeeRepository.findOneBy({
+        id: sub,
+      });
+
+      const findDoctor = await this.doctorRepository.findOneBy({
+        id: sub,
+      });
+
+      if (!findEmployee && !findDoctor) {
+        // O Error vai pular para o Unauthorized no catch e a mensagem será esta
+        throw new Error('Usuário não encontrado');
+      }
+
+      if (findEmployee) employeeOrDoctorData = { ...findEmployee };
+      if (findDoctor) employeeOrDoctorData = { ...findDoctor };
+
+      return this.CreateTokens(employeeOrDoctorData);
+    } catch (error) {
+      throw new UnauthorizedException(error.message);
+    }
+  }
 }

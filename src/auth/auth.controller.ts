@@ -14,6 +14,7 @@ export class AuthController {
     return this.authService.Login(loginDto);
   }
 
+  @Public()
   @Post('refresh')
   RefreshTokens(@Body() refreshTokenDto: RefreshTokenDTO) {
     return this.authService.RefreshTokens(refreshTokenDto);
