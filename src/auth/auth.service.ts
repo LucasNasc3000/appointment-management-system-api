@@ -7,6 +7,7 @@ import { Employee } from 'src/employees/entities/employee.entity';
 import { Repository } from 'typeorm';
 import jwtConfig from './config/jwt.config';
 import { LoginDTO } from './dto/login.dto';
+import { RefreshTokenDTO } from './dto/refresh-token.dto';
 import { HashingServiceProtocol } from './hashing/hashing.service';
 
 @Injectable()
@@ -51,21 +52,37 @@ export class AuthService {
       throw new UnauthorizedException('Email ou senha inválidos');
     }
 
-    const accessToken = await this.jwtService.signAsync(
+    const accessToken = await this.SignJwtAsync<Partial<Employee | Doctor>>(
+      employeeOrDoctorData.id,
+      this.jwtConfiguration.jwtTtl,
+      { email: employeeOrDoctorData.email },
+    );
+
+    const refreshToken = await this.SignJwtAsync<Partial<Employee | Doctor>>(
+      employeeOrDoctorData.id,
+      this.jwtConfiguration.jwtRefreshTtl,
+    );
+
+    return {
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  async SignJwtAsync<T>(sub: string, expiresIn: number, payload?: T) {
+    return await this.jwtService.signAsync(
       {
-        sub: employeeOrDoctorData.id,
-        email: employeeOrDoctorData.email,
+        sub,
+        ...payload,
       },
       {
         audience: this.jwtConfiguration.audience,
         issuer: this.jwtConfiguration.issuer,
         secret: this.jwtConfiguration.secret,
-        expiresIn: this.jwtConfiguration.jwtTtl,
+        expiresIn,
       },
     );
-
-    return {
-      accessToken,
-    };
   }
+
+  async RefreshTokens(refreshTokenDto: RefreshTokenDTO) {}
 }
