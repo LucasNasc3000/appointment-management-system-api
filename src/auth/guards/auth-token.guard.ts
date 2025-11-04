@@ -9,6 +9,9 @@ import { ConfigType } from '@nestjs/config';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import { Doctor } from 'src/doctors/entities/doctor.entity';
+import { Employee } from 'src/employees/entities/employee.entity';
+import { Repository } from 'typeorm';
 import { REQUEST_TOKEN_PAYLOAD_KEY } from '../auth.constants';
 import jwtConfig from '../config/jwt.config';
 import { IS_PUBLIC_KEY } from '../set-metadata';
@@ -21,6 +24,12 @@ export class AuthTokenGuard implements CanActivate {
 
     @Inject(jwtConfig.KEY)
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
+
+    @Inject(Employee)
+    private readonly employeeRepository: Repository<Employee>,
+
+    @Inject(Doctor)
+    private readonly doctorRepository: Repository<Doctor>,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -42,6 +51,20 @@ export class AuthTokenGuard implements CanActivate {
         token,
         this.jwtConfiguration,
       );
+
+      const findEmployee = await this.employeeRepository.findOneBy({
+        id: payload.sub,
+        is_active: true,
+      });
+
+      const findDoctor = await this.doctorRepository.findOneBy({
+        id: payload.sub,
+        is_active: true,
+      });
+
+      if (!findEmployee && !findDoctor) {
+        throw new UnauthorizedException('Usuário inválido');
+      }
 
       request[REQUEST_TOKEN_PAYLOAD_KEY] = payload;
 

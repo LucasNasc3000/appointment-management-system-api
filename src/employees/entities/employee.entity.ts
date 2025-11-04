@@ -49,6 +49,9 @@ export class Employee {
   @IsString()
   address: string;
 
+  @Column({ default: true })
+  is_active: boolean;
+
   @CreateDateColumn()
   createdAt?: Date;
 

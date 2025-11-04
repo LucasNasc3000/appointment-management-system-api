@@ -30,10 +30,12 @@ export class AuthService {
 
     const findEmployee = await this.employeeRepository.findOneBy({
       email: loginDTO.email,
+      is_active: true,
     });
 
     const findDoctor = await this.doctorRepository.findOneBy({
       email: loginDTO.email,
+      is_active: true,
     });
 
     if (!findEmployee && !findDoctor) {
@@ -99,15 +101,17 @@ export class AuthService {
 
       const findEmployee = await this.employeeRepository.findOneBy({
         id: sub,
+        is_active: true,
       });
 
       const findDoctor = await this.doctorRepository.findOneBy({
         id: sub,
+        is_active: true,
       });
 
       if (!findEmployee && !findDoctor) {
         // O Error vai pular para o Unauthorized no catch e a mensagem será esta
-        throw new Error('Usuário não encontrado');
+        throw new Error('Usuário não encontrado ou inválido');
       }
 
       if (findEmployee) employeeOrDoctorData = { ...findEmployee };

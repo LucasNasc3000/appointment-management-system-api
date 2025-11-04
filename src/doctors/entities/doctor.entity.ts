@@ -66,6 +66,9 @@ export class Doctor {
   )
   availability: DoctorsAvailability[];
 
+  @Column({ default: true })
+  is_active: boolean;
+
   @CreateDateColumn()
   createdAt?: Date;
 
